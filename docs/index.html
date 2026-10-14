@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Análisis Económicos</title>
+<meta name="description" content="Análisis económicos con datos oficiales: inflación por gobierno desde 2003 y la Ley 27.795 de financiamiento universitario. Borrador.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%276%27 fill=%27%23950b32%27/%3E%3Cpath d=%27M8 23V15M14 23V9M20 23V13M26 23V6%27 stroke=%27%23fff%27 stroke-width=%273.2%27 stroke-linecap=%27round%27/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..100,400..700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+/* Portada provisoria: mismo tema que las páginas de análisis. La identidad visual propia viene después. */
+:root {
+  color-scheme: dark;
+  --bg: #0e1014; --panel: #14171c; --panel-hi: #1b1f26; --line: #23272f;
+  --fg: #e3e5ea; --fg-2: #a3a9b6; --fg-3: #6f7685; --marca: #950b32;
+  --font-ui: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --font-num: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  --r: 6px;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { background: var(--bg); color: var(--fg); font: 15px/1.55 var(--font-ui); padding: 0 16px 48px; }
+a:focus-visible { outline: 2px solid var(--fg); outline-offset: 2px; }
+.banda { margin-inline: -16px; padding: 32px 16px 28px; background: var(--marca); color: #fff; border-bottom: 3px solid #6e0824; }
+.banda-in, .wrap { max-width: 1200px; margin-inline: auto; }
+.eyebrow { font: 600 12px var(--font-ui); font-stretch: 80%; letter-spacing: .14em; text-transform: uppercase; color: rgba(255,255,255,.78); display: flex; gap: 14px; flex-wrap: wrap; }
+.borrador { padding: 1px 8px; border: 1px solid rgba(255,255,255,.55); border-radius: 3px; color: #fff; letter-spacing: .1em; }
+h1 { margin: 10px 0 8px; font-weight: 600; font-stretch: 85%; letter-spacing: -.01em; font-size: clamp(30px, 5vw, 48px); line-height: 1.05; }
+.bajada { margin: 0; color: rgba(255,255,255,.85); max-width: 60ch; }
+.wrap { padding-top: 32px; display: grid; gap: 14px; }
+.cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+@media (max-width: 760px) { .cards { grid-template-columns: 1fr; } }
+.card { display: grid; gap: 8px; align-content: start; padding: 22px; background: var(--panel); border-radius: var(--r); border-top: 3px solid var(--marca); color: var(--fg); text-decoration: none; min-width: 0; }
+.card:hover { background: var(--panel-hi); }
+.card .eti { font: 600 11px var(--font-ui); letter-spacing: .12em; text-transform: uppercase; color: var(--fg-3); }
+.card h2 { margin: 0; font-size: 22px; font-weight: 600; font-stretch: 90%; }
+.card p { margin: 0; color: var(--fg-2); font-size: 14px; }
+.card .ir { margin-top: 6px; font: 500 13px var(--font-num); color: var(--fg); }
+.pie { margin: 18px 0 0; font-size: 13px; color: var(--fg-3); max-width: 70ch; }
+</style>
+</head>
+<body>
+<header class="banda">
+  <div class="banda-in">
+    <div class="eyebrow"><span>Datos oficiales</span><span class="borrador">Borrador</span></div>
+    <h1>Análisis Económicos</h1>
+    <p class="bajada">Inflación, salarios y políticas públicas en la Argentina, con datos del INDEC y de organismos oficiales. Cada cifra tiene su fuente.</p>
+  </div>
+</header>
+<main class="wrap">
+  <div class="cards">
+    <a class="card" href="historia.html">
+      <span class="eti">Inflación 2003–hoy</span>
+      <h2>Mirada larga</h2>
+      <p>La inflación de cada gobierno desde Néstor Kirchner, mes a mes y año por año, con la serie oficial del INDEC y los empalmes explicados.</p>
+      <span class="ir">Ver el análisis →</span>
+    </a>
+    <a class="card" href="universidades.html">
+      <span class="eti">Ley 27.795</span>
+      <h2>Universidades</h2>
+      <p>El recorrido judicial de la Ley de Financiamiento Universitario, los días de incumplimiento, qué se cumplió de cada artículo y el salario nodocente contra la inflación.</p>
+      <span class="ir">Ver el análisis →</span>
+    </a>
+  </div>
+  <p class="pie">Los datos se actualizan solos todos los días con una GitHub Action. Las fuentes y la metodología están al pie de cada página y en la carpeta <code>fuentes/</code> del repositorio.</p>
+</main>
+</body>
+</html>

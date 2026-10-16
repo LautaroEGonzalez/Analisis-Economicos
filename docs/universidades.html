@@ -529,7 +529,7 @@ td .mute { color: var(--fg-3); }
             <span class="vivo"><i></i>En vivo · desde el decreto 759/2025</span>
             <div class="dias" id="d-main">${nf(dias(H.decreto.fecha, hoy), 0)}<small>días</small></div>
             <div class="reloj" id="reloj" aria-hidden="true"></div>
-            <p>El ${fecha(H.decreto.fecha)} el Poder Ejecutivo promulgó la ley y suspendió su ejecución. Es la cuenta que usa la FATUN: días sin que la ley se aplique. ${link(H.decreto.fuente, H.decreto.link)}</p>
+            <p>El ${fecha(H.decreto.fecha)} el Poder Ejecutivo promulgó la ley y suspendió su ejecución. Días sin que la ley se aplique. ${link(H.decreto.fuente, H.decreto.link)}</p>
           </div>
           <div class="subconts">${ORD.map(([k, t, c]) => `<div class="subcont" style="border-top-color:${c}">
             <div class="n">${nf(dias(H[k].fecha, hoy), 0)}<small>días</small></div>

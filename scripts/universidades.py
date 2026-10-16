@@ -6,8 +6,8 @@ Arma docs/data/universidades.json para docs/universidades.html.
 
 - Hechos (fechas, fallos, apelaciones, cumplimiento por artículo, texto de la ley):
   fuentes/universidades_fuentes.csv, cada fila con su fuente y link.
-- Salario nodocente: fuentes/salario_nodocente.csv (básico de la categoría 3 según
-  los instructivos oficiales de liquidación). Se compara con el IPC del INDEC de la
+- Salario nodocente: fuentes/salario_nodocente.csv (básico de la categoría 7 según
+  recibos de sueldo propios desde sep-2024; antes, los aumentos paritarios nacionales). Se compara con el IPC del INDEC de la
   serie de docs/data/historia.json, más los meses de fuentes/ipc_publicado.csv que la
   API todavía no cargó: índice real con noviembre 2023 = 100.
 - Financiamiento: baja de Presupuesto Abierto (Ministerio de Economía) el crédito
@@ -200,8 +200,9 @@ def mes_sig(ym, k=1):
 def salario_nodocente():
     """Índice real del básico nodocente (nov-2023 = 100) contra el IPC del INDEC.
 
-    Cada fila del CSV trae el básico de la categoría 3 (instructivo oficial) o, si
-    no está a mano, el % de aumento del mes. Los meses sin básico se encadenan con
+    Cada fila del CSV trae el básico de la categoría 7 (recibo de sueldo propio, desde
+    sep-2024) o, si no está, el % de aumento paritario del mes, igual para todas las
+    categorías. Los meses sin básico se encadenan con
     el %; hacia atrás desde el primer básico conocido se desarma con los % hasta
     llegar a noviembre de 2023. Si una fila trae las dos cosas se controla que cierren.
     """
@@ -241,7 +242,7 @@ def salario_nodocente():
         prev = serie[-1]["basico"]
         serie.append({"mes": m, "basico": r(nivel[m], 2), "aumento": r((nivel[m] / prev - 1) * 100, 2),
                       "ipc_mes": ipc_m[m], "con_ipc": r(s0 * p, 2), "real": r(nivel[m] / s0 / p * 100, 1),
-                      "fuente": f["fuente"], "link": f["link"]})
+                      "fuente": f["fuente"], "link": f["link"], "origen": "recibo" if f["basico"] else "paritaria"})
     ult = serie[-1]
     reales = serie[1:]
     piso = min(reales, key=lambda x: x["real"])
@@ -265,7 +266,7 @@ def salario_nodocente():
         "aumento_acumulado": r((ult["basico"] / s0 - 1) * 100, 1),
         "inflacion_acumulada": r((p - 1) * 100, 1),
     }
-    return {"base": BASE_SALARIO, "categoria": "Categoría 3", "serie": serie, "kpis": kpis}
+    return {"base": BASE_SALARIO, "categoria": "Categoría 7", "serie": serie, "kpis": kpis}
 
 
 # ----------------------------------------------------------------------- main

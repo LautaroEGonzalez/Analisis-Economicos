@@ -1,5 +1,5 @@
 {
- "actualizado": "2026-10-16T20:55+00:00",
+ "actualizado": "2026-10-16T21:07+00:00",
  "hitos": {
   "decreto": {
    "fecha": "2025-10-21",
@@ -289,355 +289,389 @@
  ],
  "salario": {
   "base": "2023-11",
-  "categoria": "Categoría 3",
+  "categoria": "Categoría 7",
   "serie": [
    {
     "mes": "2023-11",
-    "basico": 533344.05,
+    "basico": 256412.1,
     "aumento": null,
     "ipc_mes": null,
-    "con_ipc": 533344.05,
+    "con_ipc": 256412.1,
     "real": 100.0
    },
    {
     "mes": "2023-12",
-    "basico": 562677.97,
+    "basico": 270514.77,
     "aumento": 5.5,
     "ipc_mes": 25.47,
-    "con_ipc": 669186.78,
+    "con_ipc": 321720.27,
     "real": 84.1,
-    "fuente": "UTN BA, Evolución de los salarios universitarios",
-    "link": "https://frba.utn.edu.ar/evolucion-de-los-salarios-universitarios/"
+    "fuente": "Aumento paritario nacional: UTN BA, Evolución de los salarios universitarios",
+    "link": "https://frba.utn.edu.ar/evolucion-de-los-salarios-universitarios/",
+    "origen": "paritaria"
    },
    {
     "mes": "2024-01",
-    "basico": 562677.97,
+    "basico": 270514.77,
     "aumento": 0.0,
     "ipc_mes": 20.61,
-    "con_ipc": 807106.18,
+    "con_ipc": 388026.81,
     "real": 69.7,
-    "fuente": "UTN BA, Evolución de los salarios universitarios",
-    "link": "https://frba.utn.edu.ar/evolucion-de-los-salarios-universitarios/"
+    "fuente": "Aumento paritario nacional: UTN BA, Evolución de los salarios universitarios",
+    "link": "https://frba.utn.edu.ar/evolucion-de-los-salarios-universitarios/",
+    "origen": "paritaria"
    },
    {
     "mes": "2024-02",
-    "basico": 652706.45,
+    "basico": 313797.13,
     "aumento": 16.0,
     "ipc_mes": 13.24,
-    "con_ipc": 913967.03,
+    "con_ipc": 439401.56,
     "real": 71.4,
-    "fuente": "Instructivo de liquidación (publicado por la UNCuyo)",
-    "link": "https://www.uncuyo.edu.ar/transparencia/escalas-salariales-y-convenios"
+    "fuente": "Aumento paritario nacional: Instructivo de liquidación (publicado por la UNCuyo)",
+    "link": "https://www.uncuyo.edu.ar/transparencia/escalas-salariales-y-convenios",
+    "origen": "paritaria"
    },
    {
     "mes": "2024-03",
-    "basico": 731032.0,
+    "basico": 351452.79,
     "aumento": 12.0,
     "ipc_mes": 11.01,
-    "con_ipc": 1014594.81,
+    "con_ipc": 487779.68,
     "real": 72.1,
-    "fuente": "Instructivo de liquidación (publicado por la UNCuyo)",
-    "link": "https://www.uncuyo.edu.ar/transparencia/escalas-salariales-y-convenios"
+    "fuente": "Aumento paritario nacional: Instructivo de liquidación (publicado por la UNCuyo)",
+    "link": "https://www.uncuyo.edu.ar/transparencia/escalas-salariales-y-convenios",
+    "origen": "paritaria"
    },
    {
     "mes": "2024-04",
-    "basico": 789514.56,
+    "basico": 379569.01,
     "aumento": 8.0,
     "ipc_mes": 8.83,
-    "con_ipc": 1104183.53,
+    "con_ipc": 530850.62,
     "real": 71.5,
-    "fuente": "UTN BA, Evolución de los salarios universitarios",
-    "link": "https://frba.utn.edu.ar/evolucion-de-los-salarios-universitarios/"
+    "fuente": "Aumento paritario nacional: UTN BA, Evolución de los salarios universitarios",
+    "link": "https://frba.utn.edu.ar/evolucion-de-los-salarios-universitarios/",
+    "origen": "paritaria"
    },
    {
     "mes": "2024-05",
-    "basico": 860571.35,
+    "basico": 413730.22,
     "aumento": 9.0,
     "ipc_mes": 4.18,
-    "con_ipc": 1150338.4,
+    "con_ipc": 553040.18,
     "real": 74.8,
-    "fuente": "Instructivo de liquidación (publicado por la UNCuyo)",
-    "link": "https://www.uncuyo.edu.ar/transparencia/escalas-salariales-y-convenios"
+    "fuente": "Aumento paritario nacional: Instructivo de liquidación (publicado por la UNCuyo)",
+    "link": "https://www.uncuyo.edu.ar/transparencia/escalas-salariales-y-convenios",
+    "origen": "paritaria"
    },
    {
     "mes": "2024-06",
-    "basico": 894994.21,
+    "basico": 430279.43,
     "aumento": 4.0,
     "ipc_mes": 4.58,
-    "con_ipc": 1203023.9,
+    "con_ipc": 578369.42,
     "real": 74.4,
-    "fuente": "Instructivo de liquidación (publicado por la UNCuyo)",
-    "link": "https://www.uncuyo.edu.ar/transparencia/escalas-salariales-y-convenios"
+    "fuente": "Aumento paritario nacional: Instructivo de liquidación (publicado por la UNCuyo)",
+    "link": "https://www.uncuyo.edu.ar/transparencia/escalas-salariales-y-convenios",
+    "origen": "paritaria"
    },
    {
     "mes": "2024-07",
-    "basico": 962118.78,
+    "basico": 462550.39,
     "aumento": 7.5,
     "ipc_mes": 4.03,
-    "con_ipc": 1251505.76,
+    "con_ipc": 601677.71,
     "real": 76.9,
-    "fuente": "Instructivo de liquidación (publicado por la UNCuyo)",
-    "link": "https://www.uncuyo.edu.ar/transparencia/escalas-salariales-y-convenios"
+    "fuente": "Aumento paritario nacional: Instructivo de liquidación (publicado por la UNCuyo)",
+    "link": "https://www.uncuyo.edu.ar/transparencia/escalas-salariales-y-convenios",
+    "origen": "paritaria"
    },
    {
     "mes": "2024-08",
-    "basico": 990982.35,
+    "basico": 476426.9,
     "aumento": 3.0,
     "ipc_mes": 4.17,
-    "con_ipc": 1303693.55,
+    "con_ipc": 626767.67,
     "real": 76.0,
-    "fuente": "Instructivo de liquidación (publicado por la UNCuyo)",
-    "link": "https://www.uncuyo.edu.ar/transparencia/escalas-salariales-y-convenios"
+    "fuente": "Aumento paritario nacional: Instructivo de liquidación (publicado por la UNCuyo)",
+    "link": "https://www.uncuyo.edu.ar/transparencia/escalas-salariales-y-convenios",
+    "origen": "paritaria"
    },
    {
     "mes": "2024-09",
-    "basico": 1010802.0,
+    "basico": 485955.44,
     "aumento": 2.0,
     "ipc_mes": 3.47,
-    "con_ipc": 1348931.72,
+    "con_ipc": 648516.5,
     "real": 74.9,
-    "fuente": "Instructivo de liquidación (publicado por la UNCuyo)",
-    "link": "https://www.uncuyo.edu.ar/transparencia/escalas-salariales-y-convenios"
+    "fuente": "Recibo de sueldo propio (categoría 7)",
+    "link": "",
+    "origen": "recibo"
    },
    {
     "mes": "2024-10",
-    "basico": 1079536.54,
+    "basico": 519000.41,
     "aumento": 6.8,
     "ipc_mes": 2.69,
-    "con_ipc": 1385217.98,
+    "con_ipc": 665961.6,
     "real": 77.9,
-    "fuente": "Instructivo de liquidación (publicado por la UNCuyo)",
-    "link": "https://www.uncuyo.edu.ar/transparencia/escalas-salariales-y-convenios"
+    "fuente": "Recibo de sueldo propio (categoría 7)",
+    "link": "",
+    "origen": "recibo"
    },
    {
     "mes": "2024-11",
-    "basico": 1101127.28,
+    "basico": 529380.42,
     "aumento": 2.0,
     "ipc_mes": 2.43,
-    "con_ipc": 1418878.78,
+    "con_ipc": 682144.47,
     "real": 77.6,
-    "fuente": "Instructivo de liquidación (publicado por la UNCuyo)",
-    "link": "https://www.uncuyo.edu.ar/transparencia/escalas-salariales-y-convenios"
+    "fuente": "Recibo de sueldo propio (categoría 7)",
+    "link": "",
+    "origen": "recibo"
    },
    {
     "mes": "2024-12",
-    "basico": 1112138.56,
+    "basico": 534674.23,
     "aumento": 1.0,
     "ipc_mes": 2.7,
-    "con_ipc": 1457188.5,
+    "con_ipc": 700562.37,
     "real": 76.3,
-    "fuente": "Instructivo de liquidación (publicado por la UNCuyo)",
-    "link": "https://www.uncuyo.edu.ar/transparencia/escalas-salariales-y-convenios"
+    "fuente": "Recibo de sueldo propio (categoría 7)",
+    "link": "",
+    "origen": "recibo"
    },
    {
     "mes": "2025-01",
-    "basico": 1128820.64,
-    "aumento": 1.5,
+    "basico": 534674.23,
+    "aumento": 0.0,
     "ipc_mes": 2.21,
-    "con_ipc": 1489392.37,
-    "real": 75.8,
-    "fuente": "Instructivo de liquidación (publicado por la UNCuyo)",
-    "link": "https://www.uncuyo.edu.ar/transparencia/escalas-salariales-y-convenios"
+    "con_ipc": 716044.79,
+    "real": 74.7,
+    "fuente": "Recibo de sueldo propio (categoría 7)",
+    "link": "",
+    "origen": "recibo"
    },
    {
     "mes": "2025-02",
-    "basico": 1142366.49,
-    "aumento": 1.2,
+    "basico": 549206.69,
+    "aumento": 2.72,
     "ipc_mes": 2.4,
-    "con_ipc": 1525137.79,
+    "con_ipc": 733229.87,
     "real": 74.9,
-    "fuente": "Instructivo de liquidación (publicado por la UNCuyo)",
-    "link": "https://www.uncuyo.edu.ar/transparencia/escalas-salariales-y-convenios"
+    "fuente": "Recibo de sueldo propio (categoría 7)",
+    "link": "",
+    "origen": "recibo"
    },
    {
     "mes": "2025-03",
-    "basico": 1157217.26,
-    "aumento": 1.3,
+    "basico": 549206.69,
+    "aumento": 0.0,
     "ipc_mes": 3.73,
-    "con_ipc": 1582025.42,
-    "real": 73.1,
-    "fuente": "Instructivo de liquidación (publicado por la UNCuyo)",
-    "link": "https://www.uncuyo.edu.ar/transparencia/escalas-salariales-y-convenios"
+    "con_ipc": 760579.34,
+    "real": 72.2,
+    "fuente": "Recibo de sueldo propio (categoría 7)",
+    "link": "",
+    "origen": "recibo"
    },
    {
     "mes": "2025-04",
-    "basico": 1172261.09,
-    "aumento": 1.3,
+    "basico": 563578.89,
+    "aumento": 2.62,
     "ipc_mes": 2.78,
-    "con_ipc": 1626005.73,
+    "con_ipc": 781723.45,
     "real": 72.1,
-    "fuente": "Instructivo de liquidación (publicado por la UNCuyo)",
-    "link": "https://www.uncuyo.edu.ar/transparencia/escalas-salariales-y-convenios"
+    "fuente": "Recibo de sueldo propio (categoría 7)",
+    "link": "",
+    "origen": "recibo"
    },
    {
     "mes": "2025-05",
-    "basico": 1187500.49,
+    "basico": 570905.42,
     "aumento": 1.3,
     "ipc_mes": 1.5,
-    "con_ipc": 1650395.82,
+    "con_ipc": 793449.3,
     "real": 72.0,
-    "fuente": "Instructivo de liquidación (publicado por la UNCuyo)",
-    "link": "https://www.uncuyo.edu.ar/transparencia/escalas-salariales-y-convenios"
+    "fuente": "Recibo de sueldo propio (categoría 7)",
+    "link": "",
+    "origen": "recibo"
    },
    {
     "mes": "2025-06",
-    "basico": 1202938.0,
-    "aumento": 1.3,
+    "basico": 570905.42,
+    "aumento": 0.0,
     "ipc_mes": 1.62,
-    "con_ipc": 1677132.23,
-    "real": 71.7,
-    "fuente": "Instructivo de liquidación jun-ago 2025 (publicado por la UNGS)",
-    "link": "https://transparencia.ungs.edu.ar/wp-content/uploads/2025/08/Instructivo-de-Liquidacion-Docentes-y-No-Docentes-Junio-a-Agosto-2025.pdf"
+    "con_ipc": 806303.18,
+    "real": 70.8,
+    "fuente": "Recibo de sueldo propio (categoría 7)",
+    "link": "",
+    "origen": "recibo"
    },
    {
     "mes": "2025-07",
-    "basico": 1218576.2,
-    "aumento": 1.3,
+    "basico": 570905.42,
+    "aumento": 0.0,
     "ipc_mes": 1.9,
-    "con_ipc": 1708997.74,
-    "real": 71.3,
-    "fuente": "Instructivo de liquidación jun-ago 2025 (publicado por la UNGS)",
-    "link": "https://transparencia.ungs.edu.ar/wp-content/uploads/2025/08/Instructivo-de-Liquidacion-Docentes-y-No-Docentes-Junio-a-Agosto-2025.pdf"
+    "con_ipc": 821622.94,
+    "real": 69.5,
+    "fuente": "Recibo de sueldo propio (categoría 7)",
+    "link": "",
+    "origen": "recibo"
    },
    {
     "mes": "2025-08",
-    "basico": 1234417.7,
-    "aumento": 1.3,
+    "basico": 593461.46,
+    "aumento": 3.95,
     "ipc_mes": 1.88,
-    "con_ipc": 1741126.9,
+    "con_ipc": 837069.45,
     "real": 70.9,
-    "fuente": "Instructivo de liquidación jun-ago 2025 (publicado por la UNGS)",
-    "link": "https://transparencia.ungs.edu.ar/wp-content/uploads/2025/08/Instructivo-de-Liquidacion-Docentes-y-No-Docentes-Junio-a-Agosto-2025.pdf"
+    "fuente": "Recibo de sueldo propio (categoría 7)",
+    "link": "",
+    "origen": "recibo"
    },
    {
     "mes": "2025-09",
-    "basico": 1249230.71,
+    "basico": 600583.0,
     "aumento": 1.2,
     "ipc_mes": 2.08,
-    "con_ipc": 1777342.34,
+    "con_ipc": 854480.5,
     "real": 70.3,
-    "fuente": "Escalas nodocentes, datos abiertos UNC",
-    "link": "https://datosabiertos.unc.edu.ar/dataset/?q=escalas+salariales+nodocentes"
+    "fuente": "Recibo de sueldo propio (categoría 7)",
+    "link": "",
+    "origen": "recibo"
    },
    {
     "mes": "2025-10",
-    "basico": 1262972.25,
+    "basico": 607189.42,
     "aumento": 1.1,
     "ipc_mes": 2.34,
-    "con_ipc": 1818932.15,
+    "con_ipc": 874475.34,
     "real": 69.4,
-    "fuente": "Escalas nodocentes, datos abiertos UNC",
-    "link": "https://datosabiertos.unc.edu.ar/dataset/?q=escalas+salariales+nodocentes"
+    "fuente": "Recibo de sueldo propio (categoría 7)",
+    "link": "",
+    "origen": "recibo"
    },
    {
     "mes": "2025-11",
-    "basico": 1276864.96,
+    "basico": 613868.51,
     "aumento": 1.1,
     "ipc_mes": 2.47,
-    "con_ipc": 1863859.77,
+    "con_ipc": 896074.88,
     "real": 68.5,
-    "fuente": "Instructivo de liquidación (publicado por la UNCuyo)",
-    "link": "https://www.uncuyo.edu.ar/transparencia/escalas-salariales-y-convenios"
+    "fuente": "Recibo de sueldo propio (categoría 7)",
+    "link": "",
+    "origen": "recibo"
    },
    {
     "mes": "2025-12",
-    "basico": 1302402.26,
-    "aumento": 2.0,
+    "basico": 613868.51,
+    "aumento": 0.0,
     "ipc_mes": 2.85,
-    "con_ipc": 1916979.78,
-    "real": 67.9,
-    "fuente": "Instructivo de liquidación ene-2026 (publicado por la UNCuyo)",
-    "link": "https://www.uncuyo.edu.ar/transparencia/escalas-salariales-y-convenios"
+    "con_ipc": 921613.01,
+    "real": 66.6,
+    "fuente": "Recibo de sueldo propio (categoría 7)",
+    "link": "",
+    "origen": "recibo"
    },
    {
     "mes": "2026-01",
-    "basico": 1334962.32,
-    "aumento": 2.5,
+    "basico": 626145.89,
+    "aumento": 2.0,
     "ipc_mes": 2.88,
-    "con_ipc": 1972188.8,
-    "real": 67.7,
-    "fuente": "Instructivo de liquidación (publicado por la UNCuyo)",
-    "link": "https://www.uncuyo.edu.ar/transparencia/escalas-salariales-y-convenios"
+    "con_ipc": 948155.47,
+    "real": 66.0,
+    "fuente": "Recibo de sueldo propio (categoría 7)",
+    "link": "",
+    "origen": "recibo"
    },
    {
     "mes": "2026-02",
-    "basico": 1364331.5,
-    "aumento": 2.2,
+    "basico": 626145.89,
+    "aumento": 0.0,
     "ipc_mes": 2.9,
-    "con_ipc": 2029382.27,
-    "real": 67.2,
-    "fuente": "Instructivo de liquidación (publicado por la UNCuyo)",
-    "link": "https://www.uncuyo.edu.ar/transparencia/escalas-salariales-y-convenios"
+    "con_ipc": 975651.98,
+    "real": 64.2,
+    "fuente": "Recibo de sueldo propio (categoría 7)",
+    "link": "",
+    "origen": "recibo"
    },
    {
     "mes": "2026-03",
-    "basico": 1391618.13,
-    "aumento": 2.0,
+    "basico": 669037.52,
+    "aumento": 6.85,
     "ipc_mes": 3.38,
-    "con_ipc": 2097975.39,
+    "con_ipc": 1008629.02,
     "real": 66.3,
-    "fuente": "Instructivo de liquidación (publicado por la UNCuyo)",
-    "link": "https://www.uncuyo.edu.ar/transparencia/escalas-salariales-y-convenios"
+    "fuente": "Recibo de sueldo propio (categoría 7)",
+    "link": "",
+    "origen": "recibo"
    },
    {
     "mes": "2026-04",
-    "basico": 1415275.64,
+    "basico": 680411.16,
     "aumento": 1.7,
     "ipc_mes": 2.58,
-    "con_ipc": 2152103.16,
+    "con_ipc": 1034651.64,
     "real": 65.8,
-    "fuente": "Instructivo de liquidación (publicado por la UNCuyo)",
-    "link": "https://www.uncuyo.edu.ar/transparencia/escalas-salariales-y-convenios"
+    "fuente": "Recibo de sueldo propio (categoría 7)",
+    "link": "",
+    "origen": "recibo"
    },
    {
     "mes": "2026-05",
-    "basico": 1436504.77,
+    "basico": 690617.33,
     "aumento": 1.5,
     "ipc_mes": 2.15,
-    "con_ipc": 2198373.37,
+    "con_ipc": 1056896.65,
     "real": 65.3,
-    "fuente": "Escalas nodocentes, datos abiertos UNC",
-    "link": "https://datosabiertos.unc.edu.ar/dataset/?q=escalas+salariales+nodocentes"
+    "fuente": "Recibo de sueldo propio (categoría 7)",
+    "link": "",
+    "origen": "recibo"
    },
    {
     "mes": "2026-06",
-    "basico": 1742911.25,
+    "basico": 837926.01,
     "aumento": 21.33,
     "ipc_mes": 1.89,
-    "con_ipc": 2239922.63,
+    "con_ipc": 1076872.0,
     "real": 77.8,
-    "fuente": "Instructivo de liquidación jun-2026 (publicado por la UNCuyo)",
-    "link": "https://www.uncuyo.edu.ar/transparencia/escalas-salariales-y-convenios"
+    "fuente": "Recibo de sueldo propio (categoría 7)",
+    "link": "",
+    "origen": "recibo"
    },
    {
     "mes": "2026-07",
-    "basico": 1742911.25,
+    "basico": 837926.01,
     "aumento": 0.0,
     "ipc_mes": 2.11,
-    "con_ipc": 2287185.0,
+    "con_ipc": 1099594.0,
     "real": 76.2,
-    "fuente": "Escalas nodocentes, datos abiertos UNC",
-    "link": "https://datosabiertos.unc.edu.ar/dataset/?q=escalas+salariales+nodocentes"
+    "fuente": "Recibo de sueldo propio (categoría 7)",
+    "link": "",
+    "origen": "recibo"
    },
    {
     "mes": "2026-08",
-    "basico": 1742911.25,
+    "basico": 837926.01,
     "aumento": 0.0,
     "ipc_mes": 1.66,
-    "con_ipc": 2325152.27,
+    "con_ipc": 1117847.26,
     "real": 75.0,
-    "fuente": "Escalas nodocentes, datos abiertos UNC",
-    "link": "https://datosabiertos.unc.edu.ar/dataset/?q=escalas+salariales+nodocentes"
+    "fuente": "Recibo de sueldo propio (categoría 7)",
+    "link": "",
+    "origen": "recibo"
    },
    {
     "mes": "2026-09",
-    "basico": 1795198.59,
+    "basico": 863063.8,
     "aumento": 3.0,
     "ipc_mes": 1.9,
-    "con_ipc": 2369330.16,
+    "con_ipc": 1139086.36,
     "real": 75.8,
-    "fuente": "Instructivo de liquidación sep-2026 (publicado por la UNCuyo)",
-    "link": "https://www.uncuyo.edu.ar/transparencia/escalas-salariales-y-convenios"
+    "fuente": "Recibo de sueldo propio (categoría 7)",
+    "link": "",
+    "origen": "recibo"
    }
   ],
   "kpis": {
@@ -646,8 +680,8 @@
    "perdida": -24.2,
    "falta_para_recuperar": 31.9,
    "piso": {
-    "mes": "2026-05",
-    "real": 65.3
+    "mes": "2026-02",
+    "real": 64.2
    },
    "antes_acta": {
     "mes": "2026-05",
@@ -670,7 +704,7 @@
      "aumento": 3.0
     }
    ],
-   "sueldos_perdidos": 9.3,
+   "sueldos_perdidos": 9.4,
    "meses": 34,
    "aumento_acumulado": 236.6,
    "inflacion_acumulada": 344.2

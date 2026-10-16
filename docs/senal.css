@@ -1,0 +1,111 @@
+/* Señal — sistema visual de Análisis Económicos.
+   Se carga DESPUÉS del <style> de cada página: redefine los tokens y la cabecera.
+   Tinta de fondo con cuadrícula fina, serif para la idea, Geist para explicar,
+   Geist Mono para cifras y fuentes. Color con significado: Señal = dato oficial,
+   coral = pérdida, verde = mejora, ámbar punteado = estimación. */
+:root {
+  color-scheme: dark;
+  --bg:        #0B0E13;
+  --panel:     #121721;
+  --panel-hi:  #18202C;
+  --line:      #253041;
+  --grid:      #1C2431;
+  --fg:        #ECEAE4;
+  --fg-2:      #A7AEBB;
+  --fg-3:      #7E8796;
+  --marca:     #7CC4FF;   /* Señal */
+  --senal:     #7CC4FF;
+  --perdida:   #FF8A6B;
+  --ok:        #6FD6A1;
+  --warn:      #E8B65A;   /* estimación */
+  --congreso:  #6FD6A1;
+  --ejecutivo: #FF8A6B;
+  --justicia:  #C9B6FF;
+  --acuerdo:   #7CC4FF;
+  --univ:      #F2B8D6;
+  --font-ui:   "Geist", "Helvetica Neue", Arial, sans-serif;
+  --font-num:  "Geist Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --font-display: "Instrument Serif", Georgia, serif;
+  --r: 14px;
+}
+body {
+  background-color: var(--bg);
+  background-image: linear-gradient(#121822 1px, transparent 1px), linear-gradient(90deg, #121822 1px, transparent 1px);
+  background-size: 40px 40px;
+  color: var(--fg);
+  font-family: var(--font-ui);
+  padding-inline: 16px;
+}
+a { color: var(--fg); }
+a:hover { color: var(--senal); }
+
+/* ---- cabecera ---- */
+.cab { margin-inline: -16px; background: var(--bg); border-bottom: 1px solid var(--grid); }
+.cab-in { max-width: 1232px; margin-inline: auto; padding: 18px 16px; display: flex; align-items: center; justify-content: space-between; gap: 12px 24px; flex-wrap: wrap; }
+.logo { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; color: var(--fg); }
+.logo svg { width: 34px; height: 34px; flex: none; }
+.logo span { font-size: 17px; font-weight: 600; letter-spacing: -.01em; }
+.cab .nav { display: flex; gap: 6px 22px; flex-wrap: wrap; }
+.cab .nav a { font-size: 14px; text-decoration: none; color: var(--fg-2); padding: 4px 0; border: 0; background: none; border-radius: 0; }
+.cab .nav a:hover { color: var(--fg); }
+.cab .nav a[aria-current="page"] { color: var(--fg); box-shadow: inset 0 -2px 0 var(--senal); }
+
+/* ---- franja de datos ---- */
+.ticker { margin-inline: -16px; background: #0E1219; border-bottom: 1px solid var(--grid); overflow-x: auto; scrollbar-width: none; }
+.ticker::-webkit-scrollbar { display: none; }
+.ticker-in { max-width: 1232px; margin-inline: auto; padding: 0 16px; display: flex; font: 13px var(--font-num); white-space: nowrap; }
+.ticker-in > span { display: inline-flex; align-items: center; gap: 8px; padding: 11px 20px; border-right: 1px solid var(--grid); }
+.ticker-in > span:first-child { padding-left: 0; color: var(--fg-3); }
+.ticker-in > span:last-child { border-right: 0; }
+.ticker-in b { font-weight: 500; color: var(--fg); }
+.ticker-in .neg { color: var(--perdida); }
+.punto { width: 7px; height: 7px; border-radius: 50%; background: var(--senal); flex: none; }
+
+/* ---- encabezado de página ---- */
+.hero { max-width: 1200px; margin-inline: auto; padding: 56px 0 8px; display: grid; gap: 16px; }
+.hero .eti { font: 500 12px var(--font-num); letter-spacing: .16em; text-transform: uppercase; color: var(--senal); }
+.hero h1 { margin: 0; font-family: var(--font-display); font-weight: 400; font-size: clamp(42px, 6.4vw, 80px); line-height: 1; letter-spacing: -.01em; color: var(--fg); text-wrap: balance; }
+.hero h1 em { color: var(--senal); }
+.hero .bajada { margin: 0; color: var(--fg-2); font-size: 18px; line-height: 1.6; max-width: 66ch; }
+.borrador { display: inline-block; margin-left: 10px; padding: 1px 8px; border: 1px dashed var(--warn); border-radius: 999px; color: var(--warn); font: 500 11px var(--font-num); letter-spacing: .08em; vertical-align: 2px; }
+
+/* ---- piezas comunes ---- */
+.wrap { padding-top: 32px; }
+.sec h2 { font-family: var(--font-display); font-weight: 400; font-size: clamp(28px, 3.2vw, 36px); line-height: 1.1; letter-spacing: 0; font-stretch: normal; }
+.sec p.sub, .lectura { color: var(--fg-2); }
+.caja, .cifra, .kpi, .art, .subcont, .tramo { background: var(--panel); border: 1px solid var(--line); border-radius: var(--r); }
+.gobs { border-color: var(--line); }
+.aviso { background: transparent; color: var(--fg-2); border: 1px dashed var(--line); border-radius: var(--r); }
+.chip { border-radius: 999px; padding: 0 8px; color: var(--warn); border-style: dashed; }
+.seg { background: var(--panel); border: 1px solid var(--line); border-radius: 999px; }
+.seg button { border-radius: 999px; font-family: var(--font-ui); }
+.seg button[aria-pressed="true"] { background: var(--panel-hi); color: var(--fg); box-shadow: inset 0 0 0 1px var(--line); }
+.fuente-chip { display: inline-flex; align-items: center; gap: 8px; padding: 4px 10px; border: 1px solid var(--line); border-radius: 999px; font: 12px var(--font-num); color: var(--fg-2); text-decoration: none; }
+.fuente-chip::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--senal); }
+.frase { display: grid; gap: 8px; }
+.frase .eti { font: 500 12px var(--font-num); letter-spacing: .14em; text-transform: uppercase; color: var(--senal); }
+.frase p { margin: 0; font-family: var(--font-display); font-size: clamp(26px, 3vw, 34px); line-height: 1.15; }
+th { font-family: var(--font-num); letter-spacing: .08em; }
+.notas { border-top-color: var(--grid); }
+.notas h3 { font-family: var(--font-num); font-weight: 500; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--fg-3); }
+
+/* ---- pie ---- */
+.pie-sitio { margin: 48px -16px 0; border-top: 1px solid var(--grid); background: var(--bg); }
+.pie-sitio div { max-width: 1232px; margin-inline: auto; padding: 18px 16px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; font: 12px var(--font-num); color: var(--fg-3); }
+
+@media (max-width: 560px) {
+  .hero { padding-top: 36px; }
+  .cab-in { padding-block: 14px; }
+}
+
+/* ---- ajustes de la página de universidades ---- */
+.kpi .v.neg, .gob .valor.neg { color: var(--perdida); }
+.kpi .v.pos, .gob .valor.pos { color: var(--ok); }
+.crono .tag.ap { color: var(--perdida); background: rgba(255,138,107,.10); border: 1px solid rgba(255,138,107,.45); border-radius: 999px; }
+.art .est-a { color: var(--fg); background: var(--panel-hi); border: 1px solid var(--line); border-radius: 999px; }
+.art .est-a i { background: var(--warn); }
+.cita { border-left: 0; border-radius: var(--r); border: 1px solid var(--line); }
+.cita mark { background: rgba(124,196,255,.16); }
+.dos .caja { border-top-width: 3px; }
+.estados .est b { font-weight: 600; }
+.hoy ol li::marker { color: var(--senal); }

@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Universidades · Análisis Económicos</title>
 <meta name="description" content="Ley 27.795 de financiamiento universitario: recorrido judicial, días de incumplimiento, qué se cumplió de cada artículo y salario nodocente contra la inflación. Borrador.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%276%27 fill=%27%23950b32%27/%3E%3Cpath d=%27M8 23V15M14 23V9M20 23V13M26 23V6%27 stroke=%27%23fff%27 stroke-width=%273.2%27 stroke-linecap=%27round%27/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 64 64%27%3E%3Crect width=%2764%27 height=%2764%27 rx=%2714%27 fill=%27%23121721%27/%3E%3Cpath d=%27M14 44H24V34H34V26H42%27 fill=%27none%27 stroke=%27%237CC4FF%27 stroke-width=%275%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3Ccircle cx=%2748%27 cy=%2720%27 r=%276%27 fill=%27%237CC4FF%27/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..100,400..700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500;600&display=swap">
 <style>
 /* Layout: misma columna de lectura en todas las páginas. Banner bordó, situación, contadores, recorrido judicial,
    cumplimiento, salario nodocente y el art. 9. Tema oscuro único. */
@@ -218,18 +218,12 @@ td .mute { color: var(--fg-3); }
 .notas ul { margin: 0; padding-left: 18px; font-size: 13px; color: var(--fg-2); display: grid; gap: 3px; }
 .notas .tipo { font: 10px var(--font-num); color: var(--fg-3); border: 1px solid var(--line); border-radius: 3px; padding: 0 4px; margin-left: 4px; }
 </style>
+<link rel="stylesheet" href="senal.css">
 </head>
 <body>
-<header class="banda">
-  <div class="banda-in">
-    <div class="banda-txt">
-      <div class="eyebrow"><a class="sitio" href="./">Análisis Económicos</a><span>Universidades</span><span class="borrador">Borrador</span></div>
-      <h1>Universidades y Ley 27.795</h1>
-      <p class="bajada">El recorrido judicial de la Ley de Financiamiento Universitario, qué se cumplió y qué no, y cuánto perdió el salario nodocente contra la inflación desde noviembre de 2023.</p>
-      <nav class="nav" aria-label="Páginas del sitio"><a href="./">Inicio</a><a href="historia.html">Mirada larga 2003–hoy</a><a href="universidades.html" aria-current="page">Universidades y Ley 27.795</a></nav>
-    </div>
-  </div>
-</header>
+<header class="cab"><div class="cab-in"><a class="logo" href="./"><svg viewBox="0 0 64 64" aria-hidden="true"><rect x="1" y="1" width="62" height="62" rx="14" fill="#121721" stroke="#253041" stroke-width="2"/><path d="M14 44 L24 44 L24 34 L34 34 L34 26 L42 26" fill="none" stroke="#7CC4FF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="48" cy="20" r="5" fill="#7CC4FF"/></svg><span>Análisis Económicos</span></a><nav class="nav" aria-label="Páginas del sitio"><a href="./">Inicio</a><a href="historia.html">Mirada larga</a><a href="universidades.html" aria-current="page">Universidades</a></nav></div></header>
+<div class="ticker" id="ticker" aria-label="Últimos datos oficiales"></div>
+<section class="hero"><span class="eti">Universidades · Ley 27.795<span class="borrador">BORRADOR</span></span><h1>Universidades y Ley 27.795</h1><p class="bajada">El recorrido judicial de la Ley de Financiamiento Universitario, qué se cumplió y qué no, y cuánto perdió el salario nodocente contra la inflación desde noviembre de 2023.</p></section>
 
 <div class="wrap" id="app"><div class="estado">Cargando los datos de universidades…</div></div>
 
@@ -240,7 +234,7 @@ td .mute { color: var(--fg-3); }
   const T = { fg: css('--fg'), fg2: css('--fg-2'), fg3: css('--fg-3'), grid: css('--grid'), line: css('--line'),
     num: css('--font-num'), ui: css('--font-ui'), perdida: css('--perdida'), congreso: css('--congreso'), ok: css('--ok') };
   const ACTOR = { congreso: ['Congreso', css('--congreso')], ejecutivo: ['Poder Ejecutivo', css('--ejecutivo')],
-    justicia: ['Justicia', css('--justicia')], acuerdo: ['Acuerdo Gobierno, CIN y gremios', css('--acuerdo')] };
+    justicia: ['Justicia', css('--justicia')], acuerdo: ['Acuerdo Gobierno, CIN y gremios', css('--acuerdo')], universidades: ['Universidades (CIN)', css('--univ')] };
   const CARRIL = {
     ley: ['La ley', 'Congreso y Ejecutivo', 'Sanción, veto, insistencia y el decreto que suspendió la ejecución.'],
     cautelar: ['Cautelar', 'arts. 5 y 6', 'La vía rápida: una medida cautelar para que se actualicen ya los salarios (art. 5) y las becas (art. 6).'],
@@ -466,5 +460,7 @@ td .mute { color: var(--fg-3); }
     .catch(e => { document.getElementById('app').innerHTML = '<div class="estado">No se pudieron cargar los datos (data/universidades.json). Revisá que la Action haya corrido.</div>'; console.error(e); });
 })();
 </script>
+<footer class="pie-sitio"><div><span>Lautaro González · Economía Política, UNLa</span><span>Cada cifra con su fuente · código y datos abiertos</span></div></footer>
+<script src="senal.js"></script>
 </body>
 </html>

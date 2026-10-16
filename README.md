@@ -7,6 +7,8 @@ Análisis de la economía argentina con datos oficiales, que se actualizan solos
 | **Mirada larga** (`docs/historia.html`) | Inflación por gobierno desde 2003: Kirchner, CFK I y II, Macri, Alberto Fernández y Milei. Serie oficial del INDEC empalmada, con el IPC Provincias de CIFRA-CTA como estimación alternativa |
 | **Universidades y Ley 27.795** (`docs/universidades.html`) | Recorrido judicial de la Ley de Financiamiento Universitario, días de incumplimiento, cumplimiento por artículo, art. 9 y salario nodocente real contra la inflación |
 
+Estética: **Señal** (`docs/senal.css` y `docs/senal.js`): fondo tinta con cuadrícula, Instrument Serif para los títulos, Geist para el texto y Geist Mono para cifras y fuentes; celeste = dato oficial, coral = pérdida, verde = mejora, ámbar punteado = estimación. La cabecera y la franja de últimos datos son las mismas en todas las páginas.
+
 Borrador. Las dos páginas nacieron en el [tablero de MECOPOL](https://github.com/LautaroEGonzalez/Tablero-Mecopol) y se mudaron acá.
 
 ## Cómo funciona

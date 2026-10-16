@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Mirada Larga · Análisis Económicos</title>
 <meta name="description" content="Inflación por gobierno desde 2003: Kirchner, Cristina Fernández, Macri, Alberto Fernández y Milei. Borrador de análisis.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%276%27 fill=%27%23950b32%27/%3E%3Cpath d=%27M8 23V15M14 23V9M20 23V13M26 23V6%27 stroke=%27%23fff%27 stroke-width=%273.2%27 stroke-linecap=%27round%27/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 64 64%27%3E%3Crect width=%2764%27 height=%2764%27 rx=%2714%27 fill=%27%23121721%27/%3E%3Cpath d=%27M14 44H24V34H34V26H42%27 fill=%27none%27 stroke=%27%237CC4FF%27 stroke-width=%275%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3Ccircle cx=%2748%27 cy=%2720%27 r=%276%27 fill=%27%237CC4FF%27/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..100,400..700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500;600&display=swap">
 <style>
 /* Layout: misma columna de lectura en todas las páginas. Banner bordó, tarjetas por gobierno,
    después la serie larga, los años y la tabla de mandatos. Tema oscuro único. */
@@ -134,18 +134,12 @@ td .mute { color: var(--fg-3); }
 .aviso { padding: 9px 13px; border-radius: var(--r); font-size: 13px; background: #221d10; color: #e9cf8f; border: 1px solid #4d3f19; }
 @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
 </style>
+<link rel="stylesheet" href="senal.css">
 </head>
 <body>
-<header class="banda">
-  <div class="banda-in">
-    <div class="banda-txt">
-      <div class="eyebrow"><a class="sitio" href="./">Análisis Económicos</a><span>Mirada larga</span><span class="borrador">Borrador</span></div>
-      <h1>Inflación por gobierno, 2003 a hoy</h1>
-      <p class="bajada">Seis gobiernos medidos con la misma vara. Para comparar mandatos de distinta duración, la cifra principal es el promedio anual.</p>
-      <nav class="nav" aria-label="Páginas del sitio"><a href="./">Inicio</a><a href="historia.html" aria-current="page">Mirada larga 2003–hoy</a><a href="universidades.html">Universidades y Ley 27.795</a></nav>
-    </div>
-  </div>
-</header>
+<header class="cab"><div class="cab-in"><a class="logo" href="./"><svg viewBox="0 0 64 64" aria-hidden="true"><rect x="1" y="1" width="62" height="62" rx="14" fill="#121721" stroke="#253041" stroke-width="2"/><path d="M14 44 L24 44 L24 34 L34 34 L34 26 L42 26" fill="none" stroke="#7CC4FF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="48" cy="20" r="5" fill="#7CC4FF"/></svg><span>Análisis Económicos</span></a><nav class="nav" aria-label="Páginas del sitio"><a href="./">Inicio</a><a href="historia.html" aria-current="page">Mirada larga</a><a href="universidades.html">Universidades</a></nav></div></header>
+<div class="ticker" id="ticker" aria-label="Últimos datos oficiales"></div>
+<section class="hero"><span class="eti">Inflación · 2003 a hoy<span class="borrador">BORRADOR</span></span><h1>Inflación por gobierno, 2003 a hoy</h1><p class="bajada">Seis gobiernos medidos con la misma vara. Para comparar mandatos de distinta duración, la cifra principal es el promedio anual.</p></section>
 
 <div class="wrap" id="app"><div class="estado">Cargando la serie histórica…</div></div>
 
@@ -153,7 +147,7 @@ td .mute { color: var(--fg-3); }
 <script>
 (() => {
   const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
-  const COL = { indec: '#e6e8ec', cifra: '#f2a93b' };   // serie oficial y estimación alternativa
+  const COL = { indec: '#ECEAE4', cifra: '#E8B65A' };   // serie oficial y estimación alternativa
   const T = { fg: css('--fg'), fg2: css('--fg-2'), fg3: css('--fg-3'), grid: css('--grid'), line: css('--line'),
     panel: css('--panel'), num: css('--font-num'), ui: css('--font-ui') };
   const nf = (v, d = 1) => v == null ? '—' : v.toLocaleString('es-AR', { minimumFractionDigits: d, maximumFractionDigits: d });
@@ -358,5 +352,7 @@ td .mute { color: var(--fg-3); }
     .catch(e => { document.getElementById('app').innerHTML = '<div class="estado">No se pudo cargar la serie histórica (data/historia.json). Revisá que la Action haya corrido.</div>'; console.error(e); });
 })();
 </script>
+<footer class="pie-sitio"><div><span>Lautaro González · Economía Política, UNLa</span><span>Cada cifra con su fuente · código y datos abiertos</span></div></footer>
+<script src="senal.js"></script>
 </body>
 </html>

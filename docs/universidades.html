@@ -10,8 +10,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500;600&display=swap">
 <style>
-/* Layout: misma columna de lectura en todas las páginas. Banner bordó, situación, contadores, recorrido judicial,
-   cumplimiento, salario nodocente y el art. 9. Tema oscuro único. */
+/* Orden: salario nodocente, la ley paso a paso (línea de tiempo), situación, contadores en vivo,
+   cumplimiento por artículo y el art. 9. Tema oscuro único (Señal). */
 :root {
   color-scheme: dark;
   --bg:       #0e1014;
@@ -219,11 +219,128 @@ td .mute { color: var(--fg-3); }
 .notas .tipo { font: 10px var(--font-num); color: var(--fg-3); border: 1px solid var(--line); border-radius: 3px; padding: 0 4px; margin-left: 4px; }
 </style>
 <link rel="stylesheet" href="senal.css">
+<style>
+/* ---- Universidades v2: índice, salario arriba, línea de tiempo ---- */
+.wrap { gap: 56px; }
+.sec { scroll-margin-top: 64px; }
+.fuentes-nota { margin: 0; font-size: 13px; color: var(--fg-3); max-width: 80ch; }
+
+/* índice fijo de la página */
+.indice { position: sticky; top: 0; z-index: 5; margin: 24px -16px 0; background: rgba(11,14,19,.92); backdrop-filter: blur(8px); border-bottom: 1px solid var(--grid); }
+.indice-in { max-width: 1232px; margin-inline: auto; padding: 0 16px; display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; }
+.indice-in::-webkit-scrollbar { display: none; }
+.indice a { flex: none; padding: 12px 12px; font-size: 14px; color: var(--fg-3); text-decoration: none; box-shadow: inset 0 -2px 0 transparent; transition: color .2s, box-shadow .2s; }
+.indice a:hover { color: var(--fg); }
+.indice a.on { color: var(--fg); box-shadow: inset 0 -2px 0 var(--senal); }
+
+/* salario: titular */
+.sal-top { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 20px 40px; align-items: end; }
+@media (max-width: 900px) { .sal-top { grid-template-columns: 1fr; } }
+.sal-num { font: 500 clamp(76px, 12vw, 148px)/.9 var(--font-num); letter-spacing: -.05em; color: var(--perdida); font-variant-numeric: tabular-nums; }
+.sal-num small { font-size: .3em; letter-spacing: 0; color: var(--fg-3); margin-left: 8px; }
+.sal-frase { margin: 0; font-family: var(--font-display); font-size: clamp(28px, 3.4vw, 40px); line-height: 1.12; text-wrap: balance; }
+.sal-frase + p { margin: 12px 0 0; color: var(--fg-2); max-width: 60ch; }
+.chart-sal { height: 440px; }
+@media (max-width: 560px) { .chart-sal { height: 340px; } }
+.caja-chart { display: grid; gap: 12px; }
+.caja-chart .fila { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; }
+
+/* comparador */
+.comp { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: 24px; align-items: start; }
+@media (max-width: 900px) { .comp { grid-template-columns: 1fr; } }
+.comp h3 { margin: 0 0 6px; font-size: 18px; font-weight: 600; }
+.comp p { margin: 0; color: var(--fg-2); font-size: 14px; }
+.rango { display: flex; flex-wrap: wrap; gap: 10px; align-items: end; margin-top: 14px; }
+.rango label { display: grid; gap: 4px; font-size: 12px; color: var(--fg-3); }
+.rango select { font: 14px var(--font-num); color: var(--fg); background: var(--panel-hi); border: 1px solid var(--line); border-radius: 10px; padding: 8px 10px; }
+.rango select:focus-visible, .chips button:focus-visible, .btn:focus-visible { outline: 2px solid var(--senal); outline-offset: 2px; }
+.barras { display: grid; gap: 14px; }
+.barra { display: grid; grid-template-columns: 150px minmax(0, 1fr) 76px; gap: 12px; align-items: center; font-size: 14px; color: var(--fg-2); }
+@media (max-width: 560px) { .barra { grid-template-columns: 96px minmax(0, 1fr) 64px; font-size: 13px; } }
+.barra .pista-b { height: 14px; background: var(--grid); border-radius: 999px; overflow: hidden; }
+.barra .pista-b i { display: block; height: 100%; border-radius: 999px; transition: width .5s cubic-bezier(.2,.7,.2,1); }
+.barra b { font: 500 15px var(--font-num); color: var(--fg); text-align: right; }
+.resultado { font-size: 15px; color: var(--fg); }
+.resultado b { font-family: var(--font-num); font-weight: 500; }
+.ojo { border: 1px dashed var(--warn); border-radius: var(--r); padding: 14px 16px; display: grid; gap: 10px; }
+.ojo p { color: var(--fg-2); font-size: 14px; margin: 0; }
+.ojo b { color: var(--fg); font-family: var(--font-num); font-weight: 500; }
+.btn { width: fit-content; font: 500 13px var(--font-ui); color: var(--fg); background: var(--panel-hi); border: 1px solid var(--line); border-radius: 999px; padding: 6px 14px; cursor: pointer; }
+.btn:hover { border-color: var(--senal); }
+
+/* mapa de las tres causas */
+.mapa-c { display: grid; gap: 0; position: relative; }
+.mapa-c .carril { grid-template-columns: 132px minmax(0, 1fr); min-height: 46px; }
+.mapa-c .pista { height: 46px; }
+.mapa-c .pista::before { background: var(--grid); }
+.mapa-c .pto { width: 14px; height: 14px; margin: -7px 0 0 -7px; border: 0; box-shadow: 0 0 0 3px var(--panel); font-size: 0; }
+.mapa-c .pto.ap { width: 12px; height: 12px; margin: -6px 0 0 -6px; }
+.mapa-c .pto:hover, .mapa-c .pto:focus-visible { outline: 2px solid var(--fg); outline-offset: 2px; }
+.mapa-c .ejet { grid-template-columns: 132px minmax(0, 1fr); }
+@media (max-width: 700px) { .mapa-c .carril, .mapa-c .ejet { grid-template-columns: 70px minmax(0, 1fr); } }
+
+/* filtros */
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chips button { font: 500 13px var(--font-ui); color: var(--fg-2); background: transparent; border: 1px solid var(--line); border-radius: 999px; padding: 6px 12px; cursor: pointer; }
+.chips button span { font-family: var(--font-num); color: var(--fg-3); margin-left: 4px; }
+.chips button[aria-pressed="true"] { color: var(--fg); background: var(--panel-hi); border-color: var(--senal); }
+
+/* línea de tiempo */
+.tl { position: relative; --x: 128px; --p: 0; }
+.tl-ol { list-style: none; margin: 0; padding: 0; }
+.tl::before, .tl-fill { content: ""; position: absolute; left: calc(var(--x) + 18px + 11px); top: 26px; width: 2px; }
+.tl::before { bottom: 40px; background: var(--line); }
+.tl-fill { height: calc((100% - 66px) * var(--p)); background: linear-gradient(var(--senal), rgba(124,196,255,.35)); box-shadow: 0 0 12px rgba(124,196,255,.35); pointer-events: none; }
+.ev { display: grid; grid-template-columns: var(--x) 24px minmax(0, 1fr); gap: 0 18px; align-items: start; position: relative; scroll-margin-top: 90px; }
+.ev-fe { text-align: right; padding-top: 10px; font-family: var(--font-num); line-height: 1.2; }
+.ev-fe b { display: block; font-weight: 500; font-size: 16px; color: var(--fg); }
+.ev-fe span { font-size: 12px; color: var(--fg-3); }
+.ev-nodo { width: 24px; height: 24px; margin-top: 12px; border-radius: 50%; background: var(--bg); border: 2px solid var(--c); display: grid; place-items: center; position: relative; z-index: 1;
+  font: 500 10px var(--font-num); color: var(--fg); }
+.ev-nodo.ap { border-radius: 5px; transform: rotate(45deg) scale(.86); }
+.ev-nodo.ap span { transform: rotate(-45deg); }
+.ev-nodo.sf { border-style: dashed; }
+.ev-card { max-width: 900px; background: var(--panel); border: 1px solid var(--line); border-left: 3px solid var(--c); border-radius: 12px; padding: 11px 16px 12px; display: grid; gap: 6px; margin: 3px 0; transition: border-color .2s, background .2s; }
+.ev:target .ev-card, .ev.flash .ev-card { background: var(--panel-hi); border-color: var(--c); }
+.ev-meta { display: flex; flex-wrap: wrap; gap: 6px 12px; align-items: center; font-size: 12px; color: var(--fg-3); }
+.ev-meta .act { color: var(--c); font-weight: 600; }
+.ev-meta .fe-m { display: none; font-family: var(--font-num); color: var(--fg-2); }
+.tag-ap { color: var(--perdida); border: 1px solid rgba(255,138,107,.45); background: rgba(255,138,107,.08); border-radius: 999px; padding: 0 8px; }
+.ev-card p { margin: 0; font-size: 15px; line-height: 1.5; color: var(--fg); }
+.ev-meta .fuente-chip { margin-left: auto; padding: 2px 9px; font-size: 11px; }
+@media (max-width: 560px) { .ev-meta .fuente-chip { margin-left: 0; } }
+.ev-gap { display: grid; grid-template-columns: var(--x) 24px minmax(0, 1fr); gap: 0 18px; height: var(--h); align-items: center; }
+.ev-gap span { grid-column: 3; font: 12px var(--font-num); color: var(--fg-3); }
+.tl[data-f]:not([data-f="todo"]) .ev-gap { display: none; }
+.tl[data-f="ley"] .ev:not([data-carril="ley"]):not(.ev-hoy),
+.tl[data-f="cautelar"] .ev:not([data-carril="cautelar"]):not(.ev-hoy),
+.tl[data-f="fondo"] .ev:not([data-carril="fondo"]):not(.ev-hoy) { display: none; }
+.ev-hoy .ev-nodo { border-color: var(--senal); background: var(--senal); box-shadow: 0 0 0 6px rgba(124,196,255,.15); }
+.ev-hoy .ev-card { border-style: dashed; border-left: 3px solid var(--senal); background: transparent; }
+.ev-hoy .ev-fe b { color: var(--senal); }
+@media (max-width: 700px) {
+  .tl { --x: 0px; }
+  .ev, .ev-gap { grid-template-columns: 24px minmax(0, 1fr); gap: 0 12px; }
+  .ev-fe { display: none; }
+  .ev-gap span { grid-column: 2; }
+  .ev-meta .fe-m { display: inline; }
+  .tl::before, .tl-fill { left: 11px; }
+}
+
+/* contador en vivo */
+.reloj { font: 500 clamp(20px, 2.4vw, 26px) var(--font-num); color: var(--fg-2); font-variant-numeric: tabular-nums; }
+.reloj span { color: var(--fg-3); font-size: .6em; margin: 0 6px 0 2px; }
+.vivo { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; color: var(--fg-3); }
+.vivo i { width: 7px; height: 7px; border-radius: 50%; background: var(--perdida); animation: latido 2s ease-in-out infinite; }
+@keyframes latido { 50% { opacity: .25; } }
+@media (prefers-reduced-motion: reduce) { .tl-fill { height: calc(100% - 66px); } .barra .pista-b i { transition: none; } .indice a { transition: none; } }
+</style>
 </head>
 <body>
 <header class="cab"><div class="cab-in"><a class="logo" href="./"><svg viewBox="0 0 64 64" aria-hidden="true"><rect x="1" y="1" width="62" height="62" rx="14" fill="#121721" stroke="#253041" stroke-width="2"/><path d="M14 44 L24 44 L24 34 L34 34 L34 26 L42 26" fill="none" stroke="#7CC4FF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="48" cy="20" r="5" fill="#7CC4FF"/></svg><span>Análisis Económicos</span></a><nav class="nav" aria-label="Páginas del sitio"><a href="./">Inicio</a><a href="historia.html">Mirada larga</a><a href="universidades.html" aria-current="page">Universidades</a></nav></div></header>
 <div class="ticker" id="ticker" aria-label="Últimos datos oficiales"></div>
-<section class="hero"><span class="eti">Universidades · Ley 27.795<span class="borrador">BORRADOR</span></span><h1>Universidades y Ley 27.795</h1><p class="bajada">El recorrido judicial de la Ley de Financiamiento Universitario, qué se cumplió y qué no, y cuánto perdió el salario nodocente contra la inflación desde noviembre de 2023.</p></section>
+<section class="hero"><span class="eti">Universidades · Ley 27.795<span class="borrador">BORRADOR</span></span><h1>Universidades y Ley 27.795</h1><p class="bajada">Cuánto perdió el salario nodocente contra la inflación desde noviembre de 2023, y el recorrido de la Ley de Financiamiento Universitario en el Congreso y en la Justicia.</p></section>
+<nav class="indice" aria-label="En esta página"><div class="indice-in"><a href="#s-salario">Salario</a><a href="#s-ley">La ley, paso a paso</a><a href="#s-hoy">Dónde estamos</a><a href="#s-dias">Días de incumplimiento</a><a href="#s-arts">Artículos</a><a href="#s-a9">Artículo 9</a></div></nav>
 
 <div class="wrap" id="app"><div class="estado">Cargando los datos de universidades…</div></div>
 
@@ -231,23 +348,24 @@ td .mute { color: var(--fg-3); }
 <script>
 (() => {
   const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
-  const T = { fg: css('--fg'), fg2: css('--fg-2'), fg3: css('--fg-3'), grid: css('--grid'), line: css('--line'),
-    num: css('--font-num'), ui: css('--font-ui'), perdida: css('--perdida'), congreso: css('--congreso'), ok: css('--ok') };
+  const T = { fg: css('--fg'), fg2: css('--fg-2'), fg3: css('--fg-3'), grid: css('--grid'), line: css('--line'), panel: css('--panel-hi'),
+    num: css('--font-num'), ui: css('--font-ui'), perdida: css('--perdida'), congreso: css('--congreso'), ok: css('--ok'), senal: css('--senal'), bg: css('--bg') };
   const ACTOR = { congreso: ['Congreso', css('--congreso')], ejecutivo: ['Poder Ejecutivo', css('--ejecutivo')],
     justicia: ['Justicia', css('--justicia')], acuerdo: ['Acuerdo Gobierno, CIN y gremios', css('--acuerdo')], universidades: ['Universidades (CIN)', css('--univ')] };
   const CARRIL = {
-    ley: ['La ley', 'Congreso y Ejecutivo', 'Sanción, veto, insistencia y el decreto que suspendió la ejecución.'],
-    cautelar: ['Cautelar', 'arts. 5 y 6', 'La vía rápida: una medida cautelar para que se actualicen ya los salarios (art. 5) y las becas (art. 6).'],
-    fondo: ['Amparo de fondo', 'toda la ley', 'El juicio principal: si el decreto 759/2025 puede suspender la ley. Abarca todos los artículos.'],
+    ley: ['La ley', 'Congreso y Ejecutivo'],
+    cautelar: ['Cautelar', 'arts. 5 y 6'],
+    fondo: ['Amparo de fondo', 'toda la ley'],
   };
+  const quieto = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const nf = (v, d = 1) => v == null ? '—' : v.toLocaleString('es-AR', { minimumFractionDigits: d, maximumFractionDigits: d });
   const MES = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
   const MESL = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
   const fecha = f => { if (!f) return 'sin fecha exacta'; const [a, m, d] = f.split('-'); return d ? `${+d} ${MES[+m - 1]} ${a}` : `${MES[+m - 1]} ${a}`; };
   const largo = ym => `${MESL[+ym.slice(5) - 1]} de ${ym.slice(0, 4)}`;
   const etq = ym => { const [a, m] = ym.split('-'); return `${MES[+m - 1]}-${a.slice(2)}`; };
-  const tip = (extra = {}) => Object.assign({ trigger: 'axis', confine: true, backgroundColor: '#1d2129', borderColor: T.line, borderWidth: 1,
-    textStyle: { color: T.fg, fontSize: 12, fontFamily: T.ui }, extraCssText: 'border-radius:6px;max-width:300px;white-space:normal;',
+  const tip = (extra = {}) => Object.assign({ trigger: 'axis', confine: true, backgroundColor: T.panel, borderColor: T.line, borderWidth: 1,
+    textStyle: { color: T.fg, fontSize: 12, fontFamily: T.ui }, extraCssText: 'border-radius:10px;max-width:300px;white-space:normal;',
     axisPointer: { type: 'line', lineStyle: { color: T.fg3, type: 'dashed' } } }, extra);
   const ejeX = extra => Object.assign({ axisLine: { lineStyle: { color: T.line } }, axisTick: { show: false },
     axisLabel: { color: T.fg3, fontFamily: T.num, fontSize: 11, hideOverlap: true }, splitLine: { show: false } }, extra);
@@ -257,7 +375,9 @@ td .mute { color: var(--fg-3); }
     `<button type="button" data-v="${v}" aria-pressed="${i === 0}">${t}</button>`).join('')}</div>`;
   const angosto = () => window.innerWidth < 700;
   const link = (txt, l) => l ? `<a href="${l}" target="_blank" rel="noopener">${txt}</a>` : txt;
+  const chip = (txt, l) => l ? `<a class="fuente-chip" href="${l}" target="_blank" rel="noopener">${txt}</a>` : `<span class="fuente-chip">${txt}</span>`;
   const oficial = l => { try { return /(\.gob\.ar|\.gov\.ar|\.edu\.ar)$/.test(new URL(l).hostname); } catch (e) { return false; } };
+  const pct = (v, d = 1, signo = false) => (signo && v > 0 ? '+' : v < 0 ? '−' : '') + nf(Math.abs(v), d) + '%';
 
   // fecha de hoy en Buenos Aires y días entre fechas
   const hoyBA = () => new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Argentina/Buenos_Aires', year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date());
@@ -268,29 +388,44 @@ td .mute { color: var(--fg-3); }
     const H = d.hitos, hoy = hoyBA(), S = d.salario, K = S.kpis;
     const app = document.getElementById('app');
 
-    // ---------- cronología numerada ----------
-    const C = d.cronologia.map((c, i) => Object.assign({ n: i + 1 }, c));
+    // ---------- cronología en orden: los hechos sin fecha van detrás del anterior ----------
+    let ult = '';
+    const C = d.cronologia.map((c, i) => { if (c.fecha) ult = c.fecha; return Object.assign({ orden: c.fecha || ult, i }, c); })
+      .sort((a, b) => a.orden < b.orden ? -1 : a.orden > b.orden ? 1 : a.i - b.i)
+      .map((c, k) => Object.assign(c, { n: k + 1 }));
     const recursos = C.filter(c => c.apelacion).length;
     const color = c => (ACTOR[c.actor] || ['', T.fg3])[1];
-    const item = c => `<li id="h${c.n}">
-      <span class="pt ${c.apelacion ? 'ap' : ''} ${c.fecha ? '' : 'sf'}" style="background:${color(c)}"><span>${c.n}</span></span>
-      <span class="tx"><span class="fe">${fecha(c.fecha)} · ${(ACTOR[c.actor] || [c.actor])[0]}${c.apelacion ? '<span class="tag ap">Recurso del Estado</span>' : ''}</span>
-        ${c.texto} ${link(c.fuente, c.link)}</span></li>`;
+    const cuenta = k => C.filter(c => c.carril === k).length;
 
-    // carriles (vista general): de la sanción a hoy
+    const evento = c => `<li class="ev" id="h${c.n}" data-carril="${c.carril}" style="--c:${color(c)}">
+      <div class="ev-fe">${c.fecha ? `<b>${+c.fecha.slice(8)} ${MES[+c.fecha.slice(5, 7) - 1]}</b><span>${c.fecha.slice(0, 4)}</span>` : '<span>sin fecha<br>exacta</span>'}</div>
+      <span class="ev-nodo ${c.apelacion ? 'ap' : ''} ${c.fecha ? '' : 'sf'}"><span>${c.n}</span></span>
+      <div class="ev-card">
+        <div class="ev-meta"><span class="fe-m">${fecha(c.fecha)}</span><span class="act">${(ACTOR[c.actor] || [c.actor])[0]}</span><span>${CARRIL[c.carril][0]}</span>${c.apelacion ? '<span class="tag-ap">Recurso del Estado</span>' : ''}${chip(c.fuente, c.link)}</div>
+        <p>${c.texto}</p>
+      </div></li>`;
+    const hueco = (a, b) => { if (!a.fecha || !b.fecha) return ''; const n = dias(a.fecha, b.fecha);
+      return `<li class="ev-gap" aria-hidden="true" style="--h:${Math.round(Math.min(72, Math.max(10, n * 0.45)))}px">${n >= 20 ? `<span>${n} días después</span>` : ''}</li>`; };
+    const ultF = [...C].reverse().find(c => c.fecha);
+    const linea = C.map((c, k) => (k ? hueco(C[k - 1], c) : '') + evento(c)).join('') +
+      hueco(ultF, { fecha: hoy }) +
+      `<li class="ev ev-hoy" style="--c:${T.senal}"><div class="ev-fe"><b>Hoy</b><span>${fecha(hoy)}</span></div><span class="ev-nodo"></span>
+        <div class="ev-card"><div class="ev-meta"><span class="fe-m">Hoy · ${fecha(hoy)}</span><span class="act">Qué sigue</span></div>
+        <p>La Cámara Contencioso Administrativo Federal tiene que resolver la apelación de la sentencia de fondo. Lo que decida se puede llevar a la Corte Suprema, como ya hizo el Estado con la cautelar. Mientras tanto, la cautelar sigue vigente.</p></div></li>`;
+
+    // mapa de las tres causas: de la sanción a hoy
     const f0 = C.filter(c => c.fecha).map(c => c.fecha).sort()[0];
-    const f1 = hoy;
-    const pos = f => (dias(f0, f) / Math.max(1, dias(f0, f1)) * 96 + 2).toFixed(2);
-    const ticks = []; { let [a, m] = f0.split('-').map(Number); m = m - 1 + 1;
+    const pos = f => (dias(f0, f) / Math.max(1, dias(f0, hoy)) * 96 + 2).toFixed(2);
+    const ticks = []; { let [a, m] = f0.split('-').map(Number);
       for (let k = 0; k < 40; k++) { const ym = `${a + Math.floor((m - 1) / 12)}-${String((m - 1) % 12 + 1).padStart(2, '0')}`;
-        if (ym + '-01' > f1) break; if (ym + '-01' >= f0 && ((m - 1) % 12) % 2 === 1) ticks.push(ym); m++; } }
-    // puntos muy cercanos en el mismo carril: se escalonan arriba y abajo para que no se tapen
-    const apilar = xs => { let ult = -99, k = 0; const sep = angosto() ? 5 : 2.4, Y = [0, -13, 13];
-      return xs.map(c => { const p = +pos(c.fecha); k = p - ult < sep ? (k + 1) % 3 : 0; ult = p; return [c, Y[k]]; }); };
-    const carriles = Object.entries(CARRIL).map(([k, [nom, sub]]) => `<div class="carril">
+        if (ym + '-01' > hoy) break; if (ym + '-01' >= f0 && ((m - 1) % 12) % 2 === 1) ticks.push(ym); m++; } }
+    const apilar = xs => { let u = -99, k = 0; const sep = angosto() ? 4 : 1.6, Y = [0, -11, 11];
+      return xs.map(c => { const p = +pos(c.fecha); k = p - u < sep ? (k + 1) % 3 : 0; u = p; return [c, Y[k]]; }); };
+    const anchoNom = () => angosto() ? 70 : 132;
+    const mapa = Object.entries(CARRIL).map(([k, [nom, sub]]) => `<div class="carril">
       <div class="nom-c"><b>${nom}</b><span class="larga">${sub}</span></div>
-      <div class="pista">${apilar(C.filter(c => c.carril === k && c.fecha)).map(([c, y]) => `<a class="pto ${c.apelacion ? 'ap' : ''}" href="#h${c.n}"
-        style="left:${pos(c.fecha)}%;top:calc(50% + ${y}px);background:${color(c)}" title="${fecha(c.fecha)}: ${c.texto.replace(/"/g, '&quot;')}"><span>${c.n}</span></a>`).join('')}</div></div>`).join('');
+      <div class="pista">${apilar(C.filter(c => c.carril === k && c.fecha)).map(([c, y]) => `<a class="pto ${c.apelacion ? 'ap' : ''}" href="#h${c.n}" data-n="${c.n}"
+        style="left:${pos(c.fecha)}%;top:calc(50% + ${y}px);background:${color(c)}" aria-label="${c.n}. ${fecha(c.fecha)}: ${c.texto.replace(/"/g, '&quot;')}" title="${fecha(c.fecha)}: ${c.texto.replace(/"/g, '&quot;')}"></a>`).join('')}</div></div>`).join('');
 
     // ---------- contadores ----------
     const ORD = [
@@ -308,11 +443,71 @@ td .mute { color: var(--fg-3); }
 
     const tr = K.tramos.map(t => `${nf(t.aumento, 2).replace(/,00$/, '')}% en ${MESL[+t.mes.slice(5) - 1]}`).join(' y ');
     const fuentesSal = [...new Map(S.serie.filter(x => x.link).map(x => [x.link, x.fuente.replace(/ (ene|jun|sep|jun-ago)[^ ]* \d{4}/, '')])).entries()];
+    const cuarto = -K.perdida >= 20 && -K.perdida <= 30;
+
+    // comparador de períodos: mismas fechas para aumento e inflación
+    const I = Object.fromEntries(S.serie.map((x, i) => [x.mes, i]));
+    const opciones = sel => S.serie.map((x, i) => `<option value="${i}" ${i === sel ? 'selected' : ''}>${etq(x.mes)}</option>`).join('');
+    const mezcla = ['2023-11', '2026-06', '2025-08'].every(m => m in I);
+    const cuenta2 = (i, j) => { const a = S.serie[i], b = S.serie[j];
+      return { aum: (b.basico / a.basico - 1) * 100, inf: (b.con_ipc / a.con_ipc - 1) * 100, real: (b.real / a.real - 1) * 100 }; };
 
     app.innerHTML = `
-      <div class="aviso">Las normas, las escalas salariales y el IPC salen de fuentes oficiales. Las resoluciones judiciales se citan de prensa jurídica y diarios cuando el fallo no está publicado en un sitio oficial; cada hecho tiene su link.</div>
+      <section class="sec" id="s-salario" aria-labelledby="t-sal">
+        <div class="sal-top">
+          <div><div class="sal-num" id="sal-num" aria-label="${nf(K.perdida, 1)}% de poder de compra">${nf(K.perdida, 1).replace('-', '−')}<small>%</small></div></div>
+          <div><h2 id="t-sal" class="sal-frase">${cuarto ? 'Con el sueldo de hoy, un nodocente compra un cuarto menos que en noviembre de 2023.' : `Con el sueldo de hoy, un nodocente compra ${nf(-K.perdida, 1)}% menos que en noviembre de 2023.`}</h2>
+            <p>Básico nodocente descontada la inflación del INDEC, a ${largo(K.ultimo_mes)}. El art. 5 de la ley pide que desde diciembre de 2023 los salarios no queden por debajo del IPC: eso es la línea de 100 del gráfico.</p></div>
+        </div>
+        <div class="caja caja-chart">
+          <div class="fila"><div class="leyenda" id="ley-sal"></div>${seg('v-sal', [['real', 'Poder de compra'], ['pesos', 'En pesos']])}</div>
+          <div class="chart chart-sal" id="ch-sal" role="img" aria-label="Índice real del salario básico nodocente, noviembre de 2023 igual a 100"></div>
+        </div>
+        <div class="kpis">
+          <div class="kpi"><span class="eti">Subió el básico</span><div class="v">+${nf(K.aumento_acumulado, 0)}%</div>
+            <div class="tx">de noviembre de 2023 a ${largo(K.ultimo_mes)}. En el mismo período los precios subieron <b>${nf(K.inflacion_acumulada, 0)}%</b>.</div></div>
+          <div class="kpi"><span class="eti">Lo que recuperó el acuerdo</span><div class="v pos">+${nf(K.salto_aumento.puntos, 1)} <small style="font-size:14px">puntos</small></div>
+            <div class="tx">con el ${nf(K.salto_aumento.aumento, 2)}% de ${MESL[+K.salto_aumento.mes.slice(5) - 1]}, desde el piso de <b>${nf(K.antes_acta.real, 1)}</b> en ${etq(K.antes_acta.mes)}. Con la inflación de después y el 3% de septiembre, hoy son <b>+${nf(K.recuperado_puntos, 1)}</b>.</div></div>
+          <div class="kpi"><span class="eti">Para volver a nov-23</span><div class="v">+${nf(K.falta_para_recuperar, 1)}%</div>
+            <div class="tx">de aumento haría falta hoy, sin inflación nueva, para recuperar el poder de compra de noviembre de 2023.</div></div>
+          <div class="kpi"><span class="eti">Lo que se perdió en el camino</span><div class="v neg">${nf(K.sueldos_perdidos, 1)} <small style="font-size:14px">sueldos</small></div>
+            <div class="tx">básicos de noviembre de 2023 dejados de cobrar en ${K.meses} meses, sumando la pérdida mes a mes (sin aguinaldo).</div></div>
+        </div>
+        <div class="caja comp">
+          <div><h3>Compará cualquier período</h3>
+            <p>Elegí dos meses. El aumento del básico y la inflación se miden siempre entre las mismas fechas.</p>
+            <div class="rango"><label>Desde<select id="c-desde">${opciones(0)}</select></label><label>Hasta<select id="c-hasta">${opciones(S.serie.length - 1)}</select></label></div></div>
+          <div class="barras" aria-live="polite">
+            <div class="barra"><span>Aumento del básico</span><div class="pista-b"><i id="b-aum" style="background:${T.senal}"></i></div><b id="v-aum">—</b></div>
+            <div class="barra"><span>Inflación (IPC)</span><div class="pista-b"><i id="b-inf" style="background:${T.perdida}"></i></div><b id="v-inf">—</b></div>
+            <div class="resultado" id="c-res"></div>
+            ${mezcla ? (() => { const a = cuenta2(I['2023-11'], I['2026-06']), b = cuenta2(I['2023-11'], I['2025-08']);
+              return `<div class="ojo"><p>Ojo con mezclar fechas. De nov-23 a jun-26 el básico subió <b>${pct(a.aum)}</b>, casi lo mismo que la inflación de nov-23 a ago-25 (<b>${pct(b.inf)}</b>). Pero con las mismas fechas, de nov-23 a jun-26, los precios subieron <b>${pct(a.inf)}</b>.</p>
+                <button type="button" class="btn" id="c-mismas">Ver nov-23 a jun-26</button></div>`; })() : ''}
+          </div>
+        </div>
+        <p class="lectura">El golpe más fuerte fue en diciembre de 2023 y enero de 2024, con inflación de ${nf(S.serie[1].ipc_mes, 0)}% y ${nf(S.serie[2].ipc_mes, 0)}% y aumentos de ${nf(S.serie[1].aumento, 1).replace(/,0$/, '')}% y ${nf(S.serie[2].aumento, 1).replace(/,0$/, '')}%. Después el salario siguió por debajo de los precios hasta tocar <b>${nf(K.piso.real, 1)}</b> en ${largo(K.piso.mes)}. Los aumentos de ${tr} recuperaron una parte, pero el salario sigue <b>${nf(-K.perdida, 1)}%</b> abajo de lo que manda la ley.</p>
+      </section>
 
-      <section class="sec" aria-labelledby="t-hoy">
+      <section class="sec" id="s-ley" aria-labelledby="t-cro">
+        <div class="sec-cab"><div><h2 id="t-cro">La ley, paso a paso</h2>
+          <p class="sub">Desde la sanción hasta hoy. En la Justicia corren dos causas dentro del mismo expediente: la <b>cautelar</b>, que pide cumplir ya salarios y becas, y el <b>amparo de fondo</b>, que discute toda la ley. Los rombos son recursos del Estado (${recursos} con fuente).</p></div></div>
+        <div class="caja">
+          <div class="mapa-c">${mapa}
+            <div class="ejet"><span></span><div class="pista">${ticks.map((t, i) => `<span class="tk ${i % 2 ? 'par' : ''}" style="left:${pos(t + '-01')}%">${etq(t)}</span>`).join('')}</div></div>
+            <div class="hoy-l" style="left:calc(${anchoNom()}px + (100% - ${anchoNom()}px) * ${pos(hoy) / 100})"></div>
+          </div>
+          <div class="ref" style="margin-top:12px">${Object.values(ACTOR).map(([n, c]) => `<span><i style="background:${c}"></i>${n}</span>`).join('')}
+            <span><i class="ap" style="background:${ACTOR.ejecutivo[1]}"></i>Recurso del Estado</span><span style="color:var(--fg-2)">┆ hoy</span></div>
+        </div>
+        <div class="chips" role="group" aria-label="Filtrar la línea de tiempo" id="filtro">
+          <button type="button" data-f="todo" aria-pressed="true">Todo<span>${C.length}</span></button>
+          ${Object.entries(CARRIL).map(([k, [n]]) => `<button type="button" data-f="${k}" aria-pressed="false">${n}<span>${cuenta(k)}</span></button>`).join('')}
+        </div>
+        <div class="tl" id="tl" data-f="todo"><span class="tl-fill" aria-hidden="true"></span><ol class="tl-ol">${linea}</ol></div>
+      </section>
+
+      <section class="sec" id="s-hoy" aria-labelledby="t-hoy">
         <div class="sec-cab"><div><h2 id="t-hoy">Dónde estamos hoy</h2></div></div>
         <div class="hoy">
           <div class="caja estados">
@@ -324,13 +519,14 @@ td .mute { color: var(--fg-3); }
         </div>
       </section>
 
-      <section class="sec" aria-labelledby="t-cont">
+      <section class="sec" id="s-dias" aria-labelledby="t-cont">
         <div class="sec-cab"><div><h2 id="t-cont">Días de incumplimiento</h2>
-          <p class="sub">Días corridos desde cada orden judicial hasta hoy, sin que la ley se cumpla por completo. Se cuentan en vivo con la fecha de Buenos Aires.</p></div></div>
+          <p class="sub">Tiempo corrido desde cada orden judicial hasta hoy, sin que la ley se cumpla por completo. Se cuenta en vivo con la hora de Buenos Aires.</p></div></div>
         <div class="conts">
           <div class="caja cont-main">
-            <span class="eti">Desde la cautelar de primera instancia</span>
-            <div class="dias">${nf(dias(H.cautelar.fecha, hoy), 0)}<small>días</small></div>
+            <span class="vivo"><i></i>En vivo · desde la cautelar de primera instancia</span>
+            <div class="dias" id="d-main">${nf(dias(H.cautelar.fecha, hoy), 0)}<small>días</small></div>
+            <div class="reloj" id="reloj" aria-hidden="true"></div>
             <p>El ${fecha(H.cautelar.fecha)} la Justicia ordenó cumplir los arts. 5 (salarios) y 6 (becas). Hasta hoy el cumplimiento es parcial. ${link(H.cautelar.fuente, H.cautelar.link)}</p>
           </div>
           <div class="subconts">${ORD.map(([k, t, c]) => `<div class="subcont" style="border-top-color:${c}">
@@ -339,43 +535,7 @@ td .mute { color: var(--fg-3); }
         </div>
       </section>
 
-      <section class="sec" aria-labelledby="t-cro">
-        <div class="sec-cab"><div><h2 id="t-cro">El recorrido en la Justicia</h2>
-          <p class="sub">Dos causas en paralelo dentro del mismo expediente: la <b>cautelar</b>, que pide cumplir ya salarios y becas, y el <b>amparo de fondo</b>, que discute toda la ley. Cada número es un hecho; los rombos son recursos del Estado (${recursos} registrados en las fuentes citadas).</p></div></div>
-        <div class="caja">
-          <div class="carriles">${carriles}
-            <div class="ejet"><span></span><div class="pista">${ticks.map((t, i) => `<span class="tk ${i % 2 ? 'par' : ''}" style="left:${pos(t + '-01')}%">${etq(t)}</span>`).join('')}</div></div>
-            <div class="hoy-l" style="left:calc(${angosto() ? 74 : 150}px + (100% - ${angosto() ? 74 : 150}px) * ${pos(hoy) / 100})"></div>
-          </div>
-          <div class="ref" style="margin-top:12px">${Object.values(ACTOR).map(([n, c]) => `<span><i style="background:${c}"></i>${n}</span>`).join('')}
-            <span><i class="ap" style="background:${ACTOR.ejecutivo[1]}"></i>Recurso del Estado</span><span style="color:var(--fg-2)">┆ hoy</span></div>
-        </div>
-        <div class="tramos">${Object.entries(CARRIL).map(([k, [nom, sub, qp]]) => `<div class="caja tramo">
-          <h3>${nom} <span style="color:var(--fg-3);font-weight:400">· ${sub}</span></h3><p class="qp">${qp}</p>
-          <ol class="crono">${C.filter(c => c.carril === k).map(item).join('')}</ol></div>`).join('')}</div>
-        <p class="lectura"><b>Qué sigue.</b> La Cámara Contencioso Administrativo Federal tiene que resolver la apelación de la sentencia de fondo. Lo que decida se puede llevar a la Corte Suprema con un recurso extraordinario, como ya hizo el Estado con la cautelar. Mientras tanto, la cautelar sigue vigente.</p>
-      </section>
-
-      <section class="sec" aria-labelledby="t-sal">
-        <div class="sec-cab"><div><h2 id="t-sal">El salario nodocente contra la inflación</h2>
-          <p class="sub">Básico de un trabajador nodocente comparado con noviembre de 2023, descontada la inflación del INDEC. El art. 5 de la ley pide que desde diciembre de 2023 los salarios no queden por debajo del IPC: eso es la línea de 100.</p></div>
-          ${seg('v-sal', [['real', 'Poder de compra'], ['pesos', 'En pesos']])}</div>
-        <div class="kpis">
-          <div class="kpi"><span class="eti">Hoy (${etq(K.ultimo_mes)})</span><div class="v neg">${nf(K.perdida, 1)}%</div>
-            <div class="tx">de poder de compra contra noviembre de 2023. El básico subió <b>${nf(K.aumento_acumulado, 0)}%</b> y los precios <b>${nf(K.inflacion_acumulada, 0)}%</b>.</div></div>
-          <div class="kpi"><span class="eti">Lo que recuperó el acuerdo</span><div class="v pos">+${nf(K.salto_aumento.puntos, 1)} <small style="font-size:14px">puntos</small></div>
-            <div class="tx">con el ${nf(K.salto_aumento.aumento, 2)}% de ${MESL[+K.salto_aumento.mes.slice(5) - 1]}, desde el piso de <b>${nf(K.antes_acta.real, 1)}</b> en ${etq(K.antes_acta.mes)}. Con la inflación de después y el 3% de septiembre, hoy son <b>+${nf(K.recuperado_puntos, 1)}</b>.</div></div>
-          <div class="kpi"><span class="eti">Para volver a nov-23</span><div class="v">+${nf(K.falta_para_recuperar, 1)}%</div>
-            <div class="tx">de aumento haría falta hoy, sin inflación nueva, para recuperar el poder de compra de noviembre de 2023.</div></div>
-          <div class="kpi"><span class="eti">Lo que se perdió en el camino</span><div class="v neg">${nf(K.sueldos_perdidos, 1)} <small style="font-size:14px">sueldos</small></div>
-            <div class="tx">básicos de noviembre de 2023 dejados de cobrar en ${K.meses} meses, sumando la pérdida mes a mes (sin aguinaldo).</div></div>
-        </div>
-        <div class="caja"><div class="chart" id="ch-sal" role="img" aria-label="Índice real del salario básico nodocente, noviembre de 2023 igual a 100"></div></div>
-        <div class="leyenda" id="ley-sal"></div>
-        <p class="lectura">El golpe más fuerte fue en diciembre de 2023 y enero de 2024, con inflación de ${nf(S.serie[1].ipc_mes, 0)}% y ${nf(S.serie[2].ipc_mes, 0)}% y aumentos de ${nf(S.serie[1].aumento, 1).replace(/,0$/, '')}% y ${nf(S.serie[2].aumento, 1).replace(/,0$/, '')}%. Después el salario siguió por debajo de los precios hasta tocar <b>${nf(K.piso.real, 1)}</b> en ${largo(K.piso.mes)}. Los aumentos de ${tr} recuperaron una parte, pero el salario sigue <b>${nf(-K.perdida, 1)}%</b> abajo de lo que manda la ley.</p>
-      </section>
-
-      <section class="sec" aria-labelledby="t-art">
+      <section class="sec" id="s-arts" aria-labelledby="t-art">
         <div class="sec-cab"><div><h2 id="t-art">Qué se cumplió de cada artículo</h2>
           <p class="sub">Lo que pide cada parte de la ley, lo que se dio y los días desde que la Justicia ordenó cumplirlo.</p></div></div>
         <div class="arts">${d.articulos.map(a => `<div class="art">
@@ -386,7 +546,7 @@ td .mute { color: var(--fg-3); }
           <div class="fu">${link(a.fuente, a.link)}</div></div>`).join('')}</div>
       </section>
 
-      <section class="sec" aria-labelledby="t-a9">
+      <section class="sec" id="s-a9" aria-labelledby="t-a9">
         <div class="sec-cab"><div><h2 id="t-a9">¿De dónde salen los fondos? El artículo 9</h2>
           <p class="sub">El Gobierno suspendió la ley con el argumento de que no dice cómo se financia. El art. 9 es la respuesta del Congreso a esa pregunta.</p></div></div>
         <figure class="cita"><blockquote>${a9m}</blockquote>
@@ -397,6 +557,7 @@ td .mute { color: var(--fg-3); }
         </div>
       </section>
 
+      <p class="fuentes-nota">Las normas, las escalas salariales y el IPC salen de fuentes oficiales. Las resoluciones judiciales se citan de prensa jurídica y diarios cuando el fallo no está publicado en un sitio oficial; cada hecho tiene su link.</p>
       <footer class="notas">
         <div><h3>Salario: método</h3><p>Básico de la categoría 3 del escalafón nodocente (CCT Decreto 366/06), sin antigüedad ni adicionales. Los aumentos fueron el mismo porcentaje para todas las categorías, así que el índice vale para todo el escalafón. No incluye sumas no remunerativas ni la garantía salarial de las categorías más bajas. Se compara con el IPC nacional del INDEC, mes a mes. ${S.serie.length - 1} meses, de ${etq(S.serie[1].mes)} a ${etq(K.ultimo_mes)}.</p></div>
         <div><h3>Salario: fuentes</h3><ul>${fuentesSal.map(([l, f]) => `<li>${link(f, l)}</li>`).join('')}<li>IPC: INDEC, serie de Mirada larga</li></ul>
@@ -406,7 +567,7 @@ td .mute { color: var(--fg-3); }
         <div><h3>Borrador</h3><p>Análisis en construcción. Algunos medios hablan de más apelaciones del Estado porque cuentan incidentes de la causa; acá figuran solo las que tienen fuente. El financiamiento por gobierno vuelve en una próxima versión. Los datos están en <code>fuentes/universidades_fuentes.csv</code> y <code>fuentes/salario_nodocente.csv</code>.</p></div>
       </footer>`;
 
-    // ---------- gráfico de salario ----------
+    // ---------- gráfico de salario: se dibuja junto con el número del titular ----------
     const el = document.getElementById('ch-sal');
     const ch = echarts.init(el);
     new ResizeObserver(() => ch.resize()).observe(el);
@@ -416,42 +577,106 @@ td .mute { color: var(--fg-3); }
       { coord: [etq(K.piso.mes), K.piso.real], txt: `piso ${nf(K.piso.real, 1)}`, pos: 'bottom' },
       ...K.tramos.map(t => ({ coord: [etq(t.mes), S.serie.find(x => x.mes === t.mes).real], txt: `+${nf(t.aumento, 2).replace(/,00$/, '')}%`, pos: 'top' })),
     ];
-    function dibujar(v) {
+    const DUR = quieto ? 0 : 1600;
+    function dibujar(v, primera) {
       const real = v === 'real', A = angosto();
       const series = real ? [
         { name: 'Poder de compra del básico', type: 'line', data: S.serie.map(x => x.real), symbol: 'circle', symbolSize: 5, showSymbol: !A,
-          lineStyle: { color: T.fg, width: 2.5 }, itemStyle: { color: T.fg },
-          areaStyle: { origin: 100, color: 'rgba(229,83,75,.22)' },
+          lineStyle: { color: T.senal, width: 2.5 }, itemStyle: { color: T.senal },
+          areaStyle: { origin: 100, color: 'rgba(255,138,107,.20)' },
           markLine: { silent: true, symbol: 'none', lineStyle: { color: T.congreso, type: 'dashed', width: 1.5 },
             label: { formatter: A ? '100 = ley' : 'Lo que manda la ley (nov-23 = 100)', color: T.congreso, fontFamily: T.num, fontSize: 11, position: 'insideEndTop' }, data: [{ yAxis: 100 }] },
           markPoint: { symbol: 'circle', symbolSize: 8, itemStyle: { color: T.fg },
-            label: { show: true, color: T.fg, fontFamily: T.num, fontSize: 11, fontWeight: 600, textBorderColor: '#0e1014', textBorderWidth: 3 },
+            label: { show: true, color: T.fg, fontFamily: T.num, fontSize: 11, fontWeight: 600, textBorderColor: T.bg, textBorderWidth: 3 },
             data: marcas.map(m => ({ coord: m.coord, label: { formatter: m.txt, position: m.pos, distance: 6 } })) } },
       ] : [
         { name: 'Básico que hubiera seguido a la inflación', type: 'line', data: S.serie.map(x => x.con_ipc), symbol: 'none',
           lineStyle: { color: T.congreso, type: 'dashed', width: 2 }, itemStyle: { color: T.congreso } },
         { name: 'Básico cobrado', type: 'line', data: S.serie.map(x => x.basico), symbol: 'circle', symbolSize: 4, showSymbol: !A,
-          lineStyle: { color: T.fg, width: 2.5 }, itemStyle: { color: T.fg } },
+          lineStyle: { color: T.senal, width: 2.5 }, itemStyle: { color: T.senal } },
       ];
-      ch.setOption({ backgroundColor: 'transparent', textStyle: { fontFamily: T.ui, color: T.fg2 }, animationDuration: 400,
+      ch.setOption({ backgroundColor: 'transparent', textStyle: { fontFamily: T.ui, color: T.fg2 },
+        animationDuration: primera ? DUR : 400, animationEasing: 'cubicOut',
         grid: { left: 4, right: A ? 10 : 16, top: 30, bottom: 4, containLabel: true },
         tooltip: tip({ formatter: p => { const x = S.serie[p[0].dataIndex];
           return `<b>${largo(x.mes)}</b><br>Poder de compra: <b>${nf(x.real, 1)}</b> <span style="color:${T.fg3}">(nov-23 = 100)</span>` +
             `<br>Básico cobrado: <b>${pesos(x.basico)}</b>` +
             (x.aumento != null ? `<br><span style="color:${T.fg3}">Aumento del mes ${nf(x.aumento, 1)}% · inflación ${nf(x.ipc_mes, 1)}%</span>` : '') +
             `<br>Con inflación: <b>${pesos(x.con_ipc)}</b>` +
-            (x.mes !== S.base ? `<br><span style="color:#ff8f88">Diferencia: ${pesos(x.con_ipc - x.basico)} por mes</span>` : ''); } }),
+            (x.mes !== S.base ? `<br><span style="color:${T.perdida}">Diferencia: ${pesos(x.con_ipc - x.basico)} por mes</span>` : ''); } }),
         xAxis: ejeX({ type: 'category', data: xs, boundaryGap: false }),
         yAxis: ejeY(real ? { min: v => Math.floor(Math.min(60, v.min) / 10) * 10, max: 105, interval: 10 }
                          : { min: 0, axisLabel: { color: T.fg3, fontFamily: T.num, fontSize: 11, formatter: v => v >= 1e6 ? '$' + nf(v / 1e6, 1) + ' M' : '$' + nf(v / 1e3, 0) + ' mil' } }),
         series }, true);
       document.getElementById('ley-sal').innerHTML = real
-        ? `<span><i class="lin" style="background:${T.fg}"></i>Poder de compra del básico (nov-23 = 100)</span><span><i class="punt" style="border-color:${T.congreso}"></i>Lo que manda el art. 5</span><span><i style="background:rgba(229,83,75,.45)"></i>Pérdida</span>`
-        : `<span><i class="lin" style="background:${T.fg}"></i>Básico cobrado, categoría 3</span><span><i class="punt" style="border-color:${T.congreso}"></i>Básico de nov-23 actualizado por IPC</span>`;
+        ? `<span><i class="lin" style="background:${T.senal}"></i>Poder de compra del básico (nov-23 = 100)</span><span><i class="punt" style="border-color:${T.congreso}"></i>Lo que manda el art. 5</span><span><i style="background:rgba(255,138,107,.45)"></i>Pérdida</span>`
+        : `<span><i class="lin" style="background:${T.senal}"></i>Básico cobrado, categoría 3</span><span><i class="punt" style="border-color:${T.congreso}"></i>Básico de nov-23 actualizado por IPC</span>`;
     }
-    dibujar('real');
+    dibujar('real', true);
     document.getElementById('v-sal').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return;
       e.currentTarget.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', x === b)); dibujar(b.dataset.v); });
+
+    // el número del titular baja de 0 a la pérdida al mismo ritmo que la línea
+    const numEl = document.getElementById('sal-num');
+    if (DUR) { const t0 = performance.now();
+      const paso = t => { const k = Math.min(1, (t - t0) / DUR), e = 1 - Math.pow(1 - k, 3);
+        numEl.firstChild.nodeValue = nf(K.perdida * e, 1).replace('-', '−'); if (k < 1) requestAnimationFrame(paso); };
+      numEl.firstChild.nodeValue = nf(0, 1); requestAnimationFrame(paso); }
+
+    // ---------- comparador ----------
+    const sD = document.getElementById('c-desde'), sH = document.getElementById('c-hasta');
+    function comparar() {
+      let i = +sD.value, j = +sH.value;
+      if (j <= i) { document.getElementById('c-res').textContent = 'Elegí un mes "hasta" posterior al mes "desde".';
+        ['b-aum', 'b-inf'].forEach(id => document.getElementById(id).style.width = '0'); ['v-aum', 'v-inf'].forEach(id => document.getElementById(id).textContent = '—'); return; }
+      const r = cuenta2(i, j), mx = Math.max(r.aum, r.inf, 1);
+      document.getElementById('b-aum').style.width = (Math.max(0, r.aum) / mx * 100).toFixed(1) + '%';
+      document.getElementById('b-inf').style.width = (Math.max(0, r.inf) / mx * 100).toFixed(1) + '%';
+      document.getElementById('v-aum').textContent = pct(r.aum);
+      document.getElementById('v-inf').textContent = pct(r.inf);
+      const a = etq(S.serie[i].mes), b = etq(S.serie[j].mes);
+      document.getElementById('c-res').innerHTML = Math.abs(r.real) < 0.05
+        ? `De ${a} a ${b} el básico siguió a la inflación.`
+        : `De ${a} a ${b} el poder de compra del básico ${r.real < 0 ? 'cayó' : 'subió'} <b>${pct(Math.abs(r.real))}</b>.`;
+    }
+    sD.addEventListener('change', comparar); sH.addEventListener('change', comparar); comparar();
+    const bm = document.getElementById('c-mismas');
+    if (bm) bm.addEventListener('click', () => { sD.value = I['2023-11']; sH.value = I['2026-06']; comparar(); });
+
+    // ---------- línea de tiempo: filtro, mapa y avance ----------
+    const tl = document.getElementById('tl');
+    document.getElementById('filtro').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return;
+      e.currentTarget.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', x === b)); tl.dataset.f = b.dataset.f; avance(); });
+    app.querySelectorAll('.mapa-c .pto').forEach(a => a.addEventListener('click', e => {
+      e.preventDefault(); const li = document.getElementById('h' + a.dataset.n);
+      if (getComputedStyle(li).display === 'none') { tl.dataset.f = 'todo'; document.querySelectorAll('#filtro button').forEach(x => x.setAttribute('aria-pressed', x.dataset.f === 'todo')); }
+      li.scrollIntoView({ behavior: quieto ? 'auto' : 'smooth', block: 'center' });
+      li.classList.add('flash'); setTimeout(() => li.classList.remove('flash'), 1800);
+      history.replaceState(null, '', '#h' + a.dataset.n); }));
+    function avance() {
+      if (quieto) { tl.style.setProperty('--p', 1); return; }
+      const r = tl.getBoundingClientRect(), mitad = innerHeight * 0.6;
+      tl.style.setProperty('--p', Math.max(0, Math.min(1, (mitad - r.top) / r.height)).toFixed(4));
+    }
+    let pend = false; addEventListener('scroll', () => { if (!pend) { pend = true; requestAnimationFrame(() => { pend = false; avance(); }); } }, { passive: true });
+    addEventListener('resize', avance); avance();
+
+    // ---------- reloj en vivo desde la cautelar (medianoche de Buenos Aires) ----------
+    const t0c = utc(H.cautelar.fecha) + 3 * 36e5, reloj = document.getElementById('reloj'), dm = document.getElementById('d-main');
+    const tic = () => { const s = Math.floor((Date.now() - t0c) / 1000), dd = Math.floor(s / 86400), h = Math.floor(s % 86400 / 3600), m = Math.floor(s % 3600 / 60), ss = s % 60;
+      dm.firstChild.nodeValue = nf(dd, 0);
+      reloj.innerHTML = `${String(h).padStart(2, '0')}<span>h</span>${String(m).padStart(2, '0')}<span>min</span>${String(ss).padStart(2, '0')}<span>s</span>`; };
+    tic(); setInterval(tic, 1000);
+
+    // ---------- índice de la página ----------
+    const links = [...document.querySelectorAll('.indice a')];
+    const vis = new Map();
+    const io = new IntersectionObserver(es => { es.forEach(e => vis.set(e.target.id, e.isIntersecting ? e.intersectionRatio : 0));
+      const act = links.map(a => a.getAttribute('href').slice(1)).find(id => (vis.get(id) || 0) > 0);
+      links.forEach(a => a.classList.toggle('on', a.getAttribute('href') === '#' + act)); }, { rootMargin: '-80px 0px -55% 0px', threshold: [0, .01] });
+    links.forEach(a => { const s = document.getElementById(a.getAttribute('href').slice(1)); if (s) io.observe(s); });
+
+    if (location.hash) { const t = document.querySelector(location.hash); if (t) setTimeout(() => t.scrollIntoView(), 50); }
   }
 
   fetch('data/universidades.json', { cache: 'no-cache' })

@@ -245,28 +245,7 @@ td .mute { color: var(--fg-3); }
 .caja-chart { display: grid; gap: 12px; }
 .caja-chart .fila { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; }
 
-/* comparador */
-.comp { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: 24px; align-items: start; }
-@media (max-width: 900px) { .comp { grid-template-columns: 1fr; } }
-.comp h3 { margin: 0 0 6px; font-size: 18px; font-weight: 600; }
-.comp p { margin: 0; color: var(--fg-2); font-size: 14px; }
-.rango { display: flex; flex-wrap: wrap; gap: 10px; align-items: end; margin-top: 14px; }
-.rango label { display: grid; gap: 4px; font-size: 12px; color: var(--fg-3); }
-.rango select { font: 14px var(--font-num); color: var(--fg); background: var(--panel-hi); border: 1px solid var(--line); border-radius: 10px; padding: 8px 10px; }
-.rango select:focus-visible, .chips button:focus-visible, .btn:focus-visible { outline: 2px solid var(--senal); outline-offset: 2px; }
-.barras { display: grid; gap: 14px; }
-.barra { display: grid; grid-template-columns: 150px minmax(0, 1fr) 76px; gap: 12px; align-items: center; font-size: 14px; color: var(--fg-2); }
-@media (max-width: 560px) { .barra { grid-template-columns: 96px minmax(0, 1fr) 64px; font-size: 13px; } }
-.barra .pista-b { height: 14px; background: var(--grid); border-radius: 999px; overflow: hidden; }
-.barra .pista-b i { display: block; height: 100%; border-radius: 999px; transition: width .5s cubic-bezier(.2,.7,.2,1); }
-.barra b { font: 500 15px var(--font-num); color: var(--fg); text-align: right; }
-.resultado { font-size: 15px; color: var(--fg); }
-.resultado b { font-family: var(--font-num); font-weight: 500; }
-.ojo { border: 1px dashed var(--warn); border-radius: var(--r); padding: 14px 16px; display: grid; gap: 10px; }
-.ojo p { color: var(--fg-2); font-size: 14px; margin: 0; }
-.ojo b { color: var(--fg); font-family: var(--font-num); font-weight: 500; }
-.btn { width: fit-content; font: 500 13px var(--font-ui); color: var(--fg); background: var(--panel-hi); border: 1px solid var(--line); border-radius: 999px; padding: 6px 14px; cursor: pointer; }
-.btn:hover { border-color: var(--senal); }
+.chips button:focus-visible { outline: 2px solid var(--senal); outline-offset: 2px; }
 
 /* mapa de las tres causas */
 .mapa-c { display: grid; gap: 0; position: relative; }
@@ -333,7 +312,7 @@ td .mute { color: var(--fg-3); }
 .vivo { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; color: var(--fg-3); }
 .vivo i { width: 7px; height: 7px; border-radius: 50%; background: var(--perdida); animation: latido 2s ease-in-out infinite; }
 @keyframes latido { 50% { opacity: .25; } }
-@media (prefers-reduced-motion: reduce) { .tl-fill { height: calc(100% - 66px); } .barra .pista-b i { transition: none; } .indice a { transition: none; } }
+@media (prefers-reduced-motion: reduce) { .tl-fill { height: calc(100% - 66px); } .indice a { transition: none; } }
 </style>
 </head>
 <body>
@@ -447,13 +426,6 @@ td .mute { color: var(--fg-3); }
     // primer mes con recibo; antes, básico reconstruido con los aumentos paritarios
     const iRec = Math.max(1, S.serie.findIndex(x => x.origen === 'recibo'));
 
-    // comparador de períodos: mismas fechas para aumento e inflación
-    const I = Object.fromEntries(S.serie.map((x, i) => [x.mes, i]));
-    const opciones = sel => S.serie.map((x, i) => `<option value="${i}" ${i === sel ? 'selected' : ''}>${etq(x.mes)}</option>`).join('');
-    const mezcla = ['2023-11', '2026-06', '2025-08'].every(m => m in I);
-    const cuenta2 = (i, j) => { const a = S.serie[i], b = S.serie[j];
-      return { aum: (b.basico / a.basico - 1) * 100, inf: (b.con_ipc / a.con_ipc - 1) * 100, real: (b.real / a.real - 1) * 100 }; };
-
     app.innerHTML = `
       <section class="sec" id="s-salario" aria-labelledby="t-sal">
         <div class="sal-top">
@@ -474,19 +446,6 @@ td .mute { color: var(--fg-3); }
             <div class="tx">de aumento haría falta hoy, sin inflación nueva, para recuperar el poder de compra de noviembre de 2023.</div></div>
           <div class="kpi"><span class="eti">Lo que se perdió en el camino</span><div class="v neg">${nf(K.sueldos_perdidos, 1)} <small style="font-size:14px">sueldos</small></div>
             <div class="tx">básicos de noviembre de 2023 dejados de cobrar en ${K.meses} meses, sumando la pérdida mes a mes (sin aguinaldo).</div></div>
-        </div>
-        <div class="caja comp">
-          <div><h3>Compará cualquier período</h3>
-            <p>Elegí dos meses. El aumento del básico y la inflación se miden siempre entre las mismas fechas.</p>
-            <div class="rango"><label>Desde<select id="c-desde">${opciones(0)}</select></label><label>Hasta<select id="c-hasta">${opciones(S.serie.length - 1)}</select></label></div></div>
-          <div class="barras" aria-live="polite">
-            <div class="barra"><span>Aumento del básico</span><div class="pista-b"><i id="b-aum" style="background:${T.senal}"></i></div><b id="v-aum">—</b></div>
-            <div class="barra"><span>Inflación (IPC)</span><div class="pista-b"><i id="b-inf" style="background:${T.perdida}"></i></div><b id="v-inf">—</b></div>
-            <div class="resultado" id="c-res"></div>
-            ${mezcla ? (() => { const a = cuenta2(I['2023-11'], I['2026-06']), b = cuenta2(I['2023-11'], I['2025-08']);
-              return `<div class="ojo"><p>Ojo con mezclar fechas. De nov-23 a jun-26 el básico subió <b>${pct(a.aum)}</b>, casi lo mismo que la inflación de nov-23 a ago-25 (<b>${pct(b.inf)}</b>). Pero con las mismas fechas, de nov-23 a jun-26, los precios subieron <b>${pct(a.inf)}</b>.</p>
-                <button type="button" class="btn" id="c-mismas">Ver nov-23 a jun-26</button></div>`; })() : ''}
-          </div>
         </div>
         <p class="lectura">El golpe más fuerte fue en diciembre de 2023 y enero de 2024, con inflación de ${nf(S.serie[1].ipc_mes, 0)}% y ${nf(S.serie[2].ipc_mes, 0)}% y aumentos de ${nf(S.serie[1].aumento, 1).replace(/,0$/, '')}% y ${nf(S.serie[2].aumento, 1).replace(/,0$/, '')}%. Después el salario siguió por debajo de los precios hasta tocar <b>${nf(K.piso.real, 1)}</b> en ${largo(K.piso.mes)}. Los aumentos de ${tr} recuperaron una parte, pero el salario sigue <b>${nf(-K.perdida, 1)}%</b> abajo de lo que manda la ley.</p>
       </section>
@@ -631,26 +590,6 @@ td .mute { color: var(--fg-3); }
       const paso = t => { const k = Math.min(1, (t - t0) / DUR), e = 1 - Math.pow(1 - k, 3);
         numEl.firstChild.nodeValue = nf(K.perdida * e, 1).replace('-', '−'); if (k < 1) requestAnimationFrame(paso); };
       numEl.firstChild.nodeValue = nf(0, 1); requestAnimationFrame(paso); }
-
-    // ---------- comparador ----------
-    const sD = document.getElementById('c-desde'), sH = document.getElementById('c-hasta');
-    function comparar() {
-      let i = +sD.value, j = +sH.value;
-      if (j <= i) { document.getElementById('c-res').textContent = 'Elegí un mes "hasta" posterior al mes "desde".';
-        ['b-aum', 'b-inf'].forEach(id => document.getElementById(id).style.width = '0'); ['v-aum', 'v-inf'].forEach(id => document.getElementById(id).textContent = '—'); return; }
-      const r = cuenta2(i, j), mx = Math.max(r.aum, r.inf, 1);
-      document.getElementById('b-aum').style.width = (Math.max(0, r.aum) / mx * 100).toFixed(1) + '%';
-      document.getElementById('b-inf').style.width = (Math.max(0, r.inf) / mx * 100).toFixed(1) + '%';
-      document.getElementById('v-aum').textContent = pct(r.aum);
-      document.getElementById('v-inf').textContent = pct(r.inf);
-      const a = etq(S.serie[i].mes), b = etq(S.serie[j].mes);
-      document.getElementById('c-res').innerHTML = Math.abs(r.real) < 0.05
-        ? `De ${a} a ${b} el básico siguió a la inflación.`
-        : `De ${a} a ${b} el poder de compra del básico ${r.real < 0 ? 'cayó' : 'subió'} <b>${pct(Math.abs(r.real))}</b>.`;
-    }
-    sD.addEventListener('change', comparar); sH.addEventListener('change', comparar); comparar();
-    const bm = document.getElementById('c-mismas');
-    if (bm) bm.addEventListener('click', () => { sD.value = I['2023-11']; sH.value = I['2026-06']; comparar(); });
 
     // ---------- línea de tiempo: filtro, mapa y avance ----------
     const tl = document.getElementById('tl');

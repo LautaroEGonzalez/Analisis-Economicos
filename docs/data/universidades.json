@@ -1,5 +1,5 @@
 {
- "actualizado": "2026-10-18T23:41+00:00",
+ "actualizado": "2026-10-25T23:34+00:00",
  "hitos": {
   "decreto": {
    "fecha": "2025-10-21",
@@ -891,7 +891,7 @@
    "anio": 2026,
    "millones": 37960.8,
    "sistema_millones": 6208036.4,
-   "bajado": "2026-10-18"
+   "bajado": "2026-10-25"
   }
  },
  "gobiernos": [
@@ -1088,14 +1088,14 @@
    "bajado": "2026-10-11"
   },
   "2026": {
-   "devengado": 4276738.093,
+   "devengado": 4277551.999,
    "vigente": 6208036.407,
-   "devengado_inciso5": 4273356.785,
+   "devengado_inciso5": 4274113.486,
    "unaj_devengado": 33534.034,
    "unaj_vigente": 37960.775,
-   "filas": 380,
+   "filas": 379,
    "url": "https://dgsiaf-repo.mecon.gob.ar/repository/pa/datasets/2026/credito-anual-2026.zip",
-   "bajado": "2026-10-18"
+   "bajado": "2026-10-25"
   }
  }
 }
